@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="MyAlgorithms">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/../MyAlgorithms/out/artifacts/MyAlgorithms_jar/MyAlgorithms.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>
