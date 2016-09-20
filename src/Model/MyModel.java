@@ -14,23 +14,29 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Observable;
-import java.util.concurrent.Callable;
+import java.util.concurrent.*;
+import java.util.zip.GZIPInputStream;
+import java.util.zip.GZIPOutputStream;
+
 
 /**
  * Created by orrko_000 on 12/09/2016.
  */
 public class MyModel extends Observable implements Model {
 
+    private ExecutorService executor;
     private HashMap<String, Maze3d> mHMap = null;
     private HashMap<String[],Solution<Coordinate>> sMap;
 
+    public MyModel() {
+        executor = Executors.newFixedThreadPool(1);
+    }
     @Override
     public Maze3d generate3dmaze(String mName, int mHeight, int fHeight, int fWidth, String algoname) throws Exception {
 
         if (mHMap == null)
             mHMap = new HashMap<>();
-
-        Callable<Maze3d> thread = new Callable<Maze3d>() {
+        executor.submit(new Callable<Maze3d>() {
             @Override
             public Maze3d call() throws Exception {
                 Maze3d myMaze;
@@ -53,10 +59,7 @@ public class MyModel extends Observable implements Model {
                 return mHMap.get(mName);
             }
 
-        };thread.call();
-
-
-
+        });
         return mHMap.get(mName);
     }
     @Override
@@ -66,7 +69,7 @@ public class MyModel extends Observable implements Model {
         Maze3d myMaze=mHMap.get(mazeName);
         Solution<Coordinate> sol;
         String[] st ={mazeName,algorithm};
-        Callable<Solution<Coordinate>> thread = new Callable<Solution<Coordinate>>() {
+        executor.submit(new Callable<Solution<Coordinate>>() {
             @Override
             public Solution<Coordinate> call() throws Exception {
                 BFS<Coordinate>  bfs;
@@ -102,8 +105,7 @@ public class MyModel extends Observable implements Model {
 
             }
 
-        };
-        thread.call();
+        });
 
     }
     @Override
@@ -209,5 +211,44 @@ public class MyModel extends Observable implements Model {
             e.printStackTrace();
         }
         return false;
+    }
+    private boolean saveHashMap(){
+        ObjectOutputStream out=null;
+        try {
+            out = new ObjectOutputStream(new GZIPOutputStream(new FileOutputStream("Solutions.dat")));
+            out.writeObject(sMap);
+            return true;
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally{
+            try {
+                out.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        return false;
+    }
+    private boolean loadHashMap(){
+        File file = new File("Solutions.dat");
+        if (!file.exists())
+            return false;
+        ObjectInputStream outPut = null;
+
+        try {
+            outPut = new ObjectInputStream(new GZIPInputStream(new FileInputStream("Solutions.dat")));
+            sMap = (HashMap<String[],Solution<Coordinate>>) outPut.readObject();
+            return true;
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        } finally{
+            try {
+                outPut.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }return  false;
     }
 }
