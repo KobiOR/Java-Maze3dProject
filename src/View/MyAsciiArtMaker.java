@@ -1,6 +1,6 @@
 package View;
 
-import Controller.Controller;
+import Presenters.Controller;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.SelectionListener;
@@ -119,6 +119,12 @@ public class MyAsciiArtMaker extends BasicWindow implements View {
     public void start() {
         run();
     }
+
+    @Override
+    public void setCli(Cli c) {
+
+    }
+
     @Override
     public int getUserCommand() {
         return 0;

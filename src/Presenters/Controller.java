@@ -1,4 +1,4 @@
-package Controller;
+package Presenters;
 
 import Model.Model;
 import View.View;

@@ -1,6 +1,5 @@
 package Model;
 
-import Controller.Controller;
 import algorithem.Demo.MazeAdapter;
 import algorithms.search.*;
 import io.MyCompressorOutputStream;
@@ -22,13 +21,9 @@ import java.util.concurrent.Callable;
  */
 public class MyModel extends Observable implements Model {
 
-    private Controller controller;
     private HashMap<String, Maze3d> mHMap = null;
     private HashMap<String[],Solution<Coordinate>> sMap;
 
-    public void setController(Controller controller) {
-        this.controller = controller;
-    }
     @Override
     public Maze3d generate3dmaze(String mName, int mHeight, int fHeight, int fWidth, String algoname) throws Exception {
 
@@ -54,19 +49,20 @@ public class MyModel extends Observable implements Model {
                     e.printStackTrace();
                 }
                 System.out.println("");
+                setChanged();notifyObservers("Maze " + mName + " created!");
                 return mHMap.get(mName);
             }
 
         };thread.call();
 
-        controller.getView().display("Maze " + mName + " created!");
+
 
         return mHMap.get(mName);
     }
     @Override
     public void solve(String mazeName, String algorithm) throws Exception {
-        if (mHMap == null) {controller.getView().display("You need to create maze first!");return;}
-        if (!mHMap.containsKey(mazeName)) {controller.getView().display("No found maze named:"+mazeName);return;}
+        if (mHMap == null) {setChanged();notifyObservers("You need to create maze first!");return;}
+        if (!mHMap.containsKey(mazeName)) {setChanged();notifyObservers("No found maze named:"+mazeName);return;}
         Maze3d myMaze=mHMap.get(mazeName);
         Solution<Coordinate> sol;
         String[] st ={mazeName,algorithm};
@@ -89,10 +85,10 @@ public class MyModel extends Observable implements Model {
                     }
                     else
                     {
-                        controller.getView().display("No found " +algorithm+" try again please!");
+                        setChanged();notifyObservers("No found " +algorithm+" try again please!");
                         return  null;
                     }
-                    controller.getView().display("Maze: " + mazeName + " was solve with: " + algorithm +" algorithm");
+                    setChanged();notifyObservers("Maze: " + mazeName + " was solve with: " + algorithm +" algorithm");
                     if (sMap==null)
                         sMap=new HashMap<>();
                     sMap.put(st,sol);
@@ -147,21 +143,21 @@ public class MyModel extends Observable implements Model {
 
         if (mHMap.containsKey(name))
             return mHMap.get(name).getCrossSectionByX(index);
-        else controller.getView().display("No maze named:" + name + " found\n");
+        else {setChanged();notifyObservers("No maze named:" + name + " found\n");}
         return null;
     }
     @Override
     public int[][] getCrossByY(int index, String name) {
         if (mHMap.containsKey(name))
             return mHMap.get(name).getCrossSectionByY(index);
-        else controller.getView().display("No maze named:" + name + " found\n");
+        else {setChanged();notifyObservers("No maze named:" + name + " found\n");}
         return null;
     }
     @Override
     public int[][] getCrossByZ(int index, String name) {
         if (mHMap.containsKey(name))
             return mHMap.get(name).getCrossSectionByZ(index);
-        else controller.getView().display("No maze named:" + name + " found\n");
+        else {setChanged();notifyObservers("No maze named:" + name + " found\n");}
         return null;
     }
     @Override
@@ -203,6 +199,8 @@ public class MyModel extends Observable implements Model {
             byte[] b=new byte[(int) new File(fileName).length()];
             in.read(b);
             in.close();
+            if(mHMap==null)
+                mHMap=new HashMap<>();
             mHMap.put(mazeName,new Maze3d(b));
             return true;
         }

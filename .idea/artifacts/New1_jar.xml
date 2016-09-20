@@ -2,7 +2,7 @@
   <artifact type="jar" name="New1:jar">
     <output-path>$PROJECT_DIR$/out/artifacts/New1_jar</output-path>
     <root id="archive" name="New1.jar">
-      <element id="module-output" name="New1" />
+      <element id="module-output" name="Project" />
       <element id="extracted-dir" path="$PROJECT_DIR$/eclipse.jar" path-in-jar="/" />
       <element id="extracted-dir" path="$PROJECT_DIR$/../MyAlgorithms/out/artifacts/MyAlgorithms_jar/MyAlgorithms.jar" path-in-jar="/" />
       <element id="library" level="project" name="eclipse" />

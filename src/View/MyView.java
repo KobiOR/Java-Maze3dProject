@@ -1,15 +1,6 @@
 package View;
 
-import Controller.Command;
-import Controller.Commands.*;
-import Controller.Controller;
-
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.PrintWriter;
-import java.util.HashMap;
-
 import static mazeGenerators.Maze3dGenerator.*;
 
 /**
@@ -17,37 +8,18 @@ import static mazeGenerators.Maze3dGenerator.*;
  */
 public class MyView extends BasicWindow implements View {
     private Cli cmdLine;
-    private Controller myCtlr;
-    private HashMap<String, Command> hMap;
-
 
     public MyView(String title, int width, int height) {
         super(title, width, height);
     }
     public void start() throws IOException {
-
-        hMap=new HashMap<>();
-        installCommands();
-        cmdLine=new Cli(new BufferedReader(new InputStreamReader(System.in)), new PrintWriter(System.out, true), hMap);
         instruction();
         cmdLine.start();
-
     }
-    private void installCommands()    {
-        hMap.put("dir",new Dir(myCtlr));
-        hMap.put("generate_maze",new GenerateMaze(myCtlr));
-        hMap.put("display",new Display(myCtlr));
-        hMap.put("display_cross_section",new DisplayCrossSection(myCtlr));
-        hMap.put("save_maze",new SaveMaze(myCtlr));
-        hMap.put("load_maze",new LoadMaze(myCtlr));
-        hMap.put("solve",new Solve(myCtlr));
-        hMap.put("display_solution",new DisplaySolution(myCtlr));
-        hMap.put("exit",new Exit(myCtlr));
+    @Override
+    public void setCli(Cli c) {
+        this.cmdLine = c;
 
-    }
-    public void setController(Controller controller)
-    {
-        this.myCtlr = controller;
     }
     @Override
     public int getUserCommand() {

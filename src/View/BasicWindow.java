@@ -3,7 +3,9 @@ package View;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Shell;
 
-public abstract class BasicWindow implements Runnable {
+import java.util.Observable;
+
+public abstract class BasicWindow extends Observable implements Runnable {
 
     Display display;
     protected Shell shell;

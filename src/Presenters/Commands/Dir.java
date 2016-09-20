@@ -1,8 +1,8 @@
-package Controller.Commands;
+package Presenters.Commands;
 
 
-import Controller.Controller;
-import Controller.Deliver;
+import Presenters.Deliver;
+import Presenters.Presenter;
 
 import static mazeGenerators.Maze3dGenerator.*;
 
@@ -12,14 +12,13 @@ import static mazeGenerators.Maze3dGenerator.*;
  */
 public class Dir extends Deliver {
 
-    public Dir(Controller ctlr) {
-        super(ctlr);
+    public Dir(Presenter p) {
+        super(p);
     }
-
     @Override
     public void doCommand(String cmd) {
         try {
-            dController.getView().display(dController.getModel().dir(cmd));
+            pDeliver.getView().display(pDeliver.getModel().dir(cmd));
         } catch (Exception e) {
 
             System.out.println(ANSI_RED+ANSI_BOLD+"Catch NullPointerException"+ANSI_BOLD_END+ANSI_RESET);

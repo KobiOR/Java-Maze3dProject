@@ -1,41 +1,22 @@
 package Boot;
 
 import View.MyView;
-import Controller.MyController;
+import Presenters.Presenter;
+import Model.Model;
 import Model.MyModel;
-
-
 import java.io.IOException;
+import java.util.Observable;
 
 
 public class Run{
 
     public static void main(String[] args) throws IOException {
-        MyView mv = new MyView("HW", 200, 100);
-        MyModel m = new MyModel();
-        MyController c = new MyController(mv, m);
-        m.setController(c);
-        mv.setController(c);
-        mv.start();
-
-
-
+        MyView myView = new MyView("HW", 200, 100);
+        Model myModel = new MyModel();
+        Presenter c = new Presenter(myView, myModel);
+        ((Observable)myView).addObserver(c);
+        ((Observable)myModel).addObserver(c);
+        myView.start();
       }
-      /*
-    private static void buildHelloWorld() throws IOException {
-        MyView hello = new MyView("HW", 200, 100);
-        MyModel m = new MyModel();
-        MyController c = new MyController(hello, m);
-        m.setController(c);
-        hello.start();
-    }
-    private static void buildMyAsciiArtMaker() {
-        MyAsciiArtMaker win = new MyAsciiArtMaker("ASCII maker", 500, 300);
-        MyModel m = new MyModel();
-        MyController c = new MyController(win, m);
-        m.setController(c);
-        win.setController(c);
-        win.start();
-    }
-*/
+
 }
