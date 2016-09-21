@@ -8,6 +8,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.HashMap;
 import java.util.Observable;
+import java.util.concurrent.TimeUnit;
 
 /**
  * Created by orrko_000 on 12/09/2016.
@@ -50,5 +51,10 @@ public class Cli extends Observable {
         return strCmd;
 
     }
+    public void test(String s)
+    {
+        setChanged();
+        notifyObservers(s.split(" "));
 
+    }
 }

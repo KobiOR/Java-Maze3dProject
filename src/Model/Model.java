@@ -1,8 +1,13 @@
 package Model;
 
+import algorithms.search.Solution;
+import mazeGenerators.Coordinate;
 import mazeGenerators.Maze3d;
 
-import java.io.IOException;
+import java.io.*;
+import java.util.HashMap;
+import java.util.zip.GZIPInputStream;
+import java.util.zip.GZIPOutputStream;
 
 /**
  * Created by orrko_000 on 12/09/2016.
@@ -107,7 +112,8 @@ public interface Model {
      * @return bollean
      */
     boolean saveMaze(String fileName, String mazeName);
-
+    public boolean saveHashMap() throws IOException;
+    public boolean loadHashMap() throws IOException;
     boolean loadMaze(String s, String s1) throws IOException;
     /**
      * load the maze called "name" in the file called "fileName"
@@ -120,5 +126,7 @@ public interface Model {
  * load from the file called "fileName" a new maze that will be saved
  * under the name "name"
  * @param fileName
-     *  */
+
+      */
+
 }

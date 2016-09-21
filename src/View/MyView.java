@@ -55,5 +55,10 @@ public class MyView extends BasicWindow implements View {
         cmdLine.displaymessage(ANSI_RED+ANSI_BOLD+"To exit press:"+ANSI_BOLD_END+"exit"+ANSI_RESET);
 
     }
+    public void test(String s){
+        cmdLine.test(s);
+
+
+    }
 }
 
