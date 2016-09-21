@@ -30,8 +30,8 @@ public class Cli extends Observable {
                 while (true) {
                     try {
                         String[] input = in.readLine().split(" ");
-                        setChanged();
-                        notifyObservers(input);
+                        if(input[0].equals("test"))test();
+                        else notifyObservers(input);
 
                     } catch (IOException e) {
                         e.printStackTrace();
@@ -51,10 +51,16 @@ public class Cli extends Observable {
         return strCmd;
 
     }
-    public void test(String s)
-    {
+    public void test(){
+        notifyObservers("generate_maze A 2 11 14 GrowingTree".split(" "));
         setChanged();
-        notifyObservers(s.split(" "));
+        notifyObservers("generate_maze B 2 7 5 GrowingTree".split(" "));
+        setChanged();
+        notifyObservers("solve A BFS".split(" "));
+        setChanged();
+        notifyObservers("solve B DFS".split(" "));
+        setChanged();
+        notifyObservers("exit".split(" "));
 
     }
 }

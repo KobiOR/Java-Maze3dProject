@@ -16,7 +16,8 @@ public class Exit  extends Deliver {
     @Override
     public void doCommand(String cmd) {
         try {
-           pDeliver.getModel().saveHashMap();
+            pDeliver.getModel().saveHashMap();
+            pDeliver.getModel().saveProperties();
             exit(1);
         } catch (Exception e) {
             // TODO Auto-generated catch block

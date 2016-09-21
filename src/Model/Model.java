@@ -115,6 +115,8 @@ public interface Model {
     public boolean saveHashMap() throws IOException;
     public boolean loadHashMap() throws IOException;
     boolean loadMaze(String s, String s1) throws IOException;
+
+    void saveProperties();
     /**
      * load the maze called "name" in the file called "fileName"
      * @param name

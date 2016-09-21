@@ -1,6 +1,6 @@
 package View;
 
-import Presenters.Controller;
+import Presenters.Presenter;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.SelectionListener;
@@ -21,16 +21,10 @@ public class MyAsciiArtMaker extends BasicWindow implements View {
 
     Text asciiText;
     String fileName;
-    private Controller controller;
-    public MyAsciiArtMaker(String title, int width, int height, Controller ctr) {
-        super(title, width, height);
-        this.controller = ctr;
-    }
-
+    private Presenter p;
     public MyAsciiArtMaker(String title, int width, int height) {
         super(title, width, height);
     }
-
     @Override
     public void initWidgets() {
 
@@ -70,8 +64,6 @@ public class MyAsciiArtMaker extends BasicWindow implements View {
 
             @Override
             public void widgetSelected(SelectionEvent arg0) {
-                if (fileName != null)
-                    controller.convert(fileName);
             }
 
             @Override
@@ -110,27 +102,22 @@ public class MyAsciiArtMaker extends BasicWindow implements View {
         } catch (Exception e) {
         }
     }
-
     @Override
     public void display(int[][] maze3d) {
 
     }
-
     public void start() {
         run();
     }
-
     @Override
     public void setCli(Cli c) {
 
     }
-
     @Override
     public int getUserCommand() {
         return 0;
     }
-
-    public void setController(Controller ctl) {
-        this.controller = ctl;
+    public void setController(Presenter p) {
+        this.p = p;
     }
 }

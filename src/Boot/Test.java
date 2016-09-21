@@ -21,18 +21,7 @@ public class Test {
         Presenter c = new Presenter(myView, myModel);
         ((Observable)myView).addObserver(c);
         ((Observable)myModel).addObserver(c);
-        myView.start();
-        myView.test("generate_maze aaa 5 11 13 GrowingTree");
 
-        TimeUnit.SECONDS.sleep(1);
-        myView.test("display aaa");
-        TimeUnit.SECONDS.sleep(1);
-         myView.test("solve a BFS");
-      //  myView.test("solve a DFS");
-       /// myView.test("display_solution a");
-      //  myView.test("display_solution a");
-       // myView.test("display_cross_section 3 x a");
-       // myView.test("display_cross_section 1 y a");
-       // myView.test("display_cross_section 5 z a");
+
     }
 }

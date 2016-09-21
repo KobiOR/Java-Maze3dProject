@@ -1,5 +1,6 @@
 package Model;
 
+import Presenters.*;
 import algorithem.Demo.MazeAdapter;
 import algorithms.search.*;
 import io.MyCompressorOutputStream;
@@ -8,15 +9,10 @@ import mazeGenerators.Coordinate;
 import mazeGenerators.GrowingTreeGenerator;
 import mazeGenerators.Maze3d;
 import mazeGenerators.SimpleMaze3dGenerator;
-
-import java.net.URI;
-import java.nio.file.FileSystems;
-import java.nio.file.Files;
-import java.nio.file.Paths;
+import java.beans.XMLEncoder;
 import java.util.*;
-import java.util.stream.Stream;
+import java.util.Properties;
 import java.util.zip.ZipInputStream;
-
 import java.io.*;
 import java.util.concurrent.*;
 import java.util.zip.*;
@@ -32,17 +28,17 @@ public class MyModel extends Observable implements Model {
     private ExecutorService executor;
     private HashMap<String, Maze3d> mHMap = null;
     private HashMap<String[], Solution<Coordinate>> sMap;
-
+    private Presenters.Properties p;
     public MyModel() {
+        p = PropertiesLoader.getInstance().getProperties();
         executor = Executors.newFixedThreadPool(1);
         try {
             loadHashMap();
         } catch (IOException e) {
-            e.printStackTrace();
+            notifyObservers("No found files to load");
         }
 
     }
-
     @Override
     public Maze3d generate3dmaze(String mName, int mHeight, int fHeight, int fWidth, String algoname) throws Exception {
 
@@ -261,14 +257,14 @@ public class MyModel extends Observable implements Model {
         }
         ZipEntry e = new ZipEntry("data.txt");
         out.putNextEntry(e);
+        //out.write(((Integer)sMap.size()).toString().getBytes());
+       // out.write("\r\n".getBytes());
         for (String[] s : sMap.keySet()) {
             for (String se : s) {
                 out.write(se.getBytes());
                 out.write("\r\n".getBytes());
             }
             out.write(sMap.get(s).toString().getBytes());
-            out.write("\r\n".getBytes());
-            out.write("-1".getBytes());
             out.write("\r\n".getBytes());
         }
 
@@ -283,9 +279,24 @@ public class MyModel extends Observable implements Model {
     public boolean loadHashMap() throws IOException {
         unZipIt("data.zip");
         String s=new String();
-        List<String> list=new ArrayList<>();
-        try (Stream<String> stream = Files.lines(Paths.get("data.txt"))) {
-            list.add(stream.toString());
+        Queue<String> queue=new LinkedList<String>();
+        if (sMap==null)
+            sMap=new HashMap<>();
+        try (BufferedReader br = new BufferedReader(new FileReader("data.txt"))) {
+            String line;
+            while ((line = br.readLine()) != null) {
+                queue.add(line);
+            }
+        }
+        while (!queue.isEmpty()) {
+            List<State<Coordinate>> states = new ArrayList();
+            String []s1=new String[]{new String(queue.poll()),new String(queue.poll())};
+            String [] s3=queue.poll().split("->");
+            for (String se:s3)
+            {
+                states.add(new State<Coordinate>(new Coordinate(se)));
+            }
+            sMap.put(s1,new Solution<Coordinate>(states));
         }
         return true;
     }
@@ -320,8 +331,19 @@ public class MyModel extends Observable implements Model {
             System.out.println(ANSI_BOLD+ANSI_BLUE+"The file:"+ zipFile+" was unzip successfully"+ANSI_RESET);
 
         }catch(IOException ex){
-            ex.printStackTrace();
+            notifyObservers("No files to load");
         }
+    }
+    public void saveProperties() {
+        try {
+            XMLEncoder encoder = new XMLEncoder(new FileOutputStream("properties.xml"));
+            encoder.writeObject(p);
+            encoder.close();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+
+
     }
 
 }
