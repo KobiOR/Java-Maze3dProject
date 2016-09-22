@@ -30,7 +30,7 @@ public class MyModel extends Observable implements Model {
     private HashMap<String[], Solution<Coordinate>> sMap;
     private Presenters.Properties p;
     public MyModel() {
-        p = PropertiesLoader.getInstance().getProperties();
+       p = PropertiesLoader.getInstance().getProperties();
         executor = Executors.newFixedThreadPool(1);
         try {
             loadHashMap();
@@ -73,7 +73,6 @@ public class MyModel extends Observable implements Model {
         });
         return mHMap.get(mName);
     }
-
     @Override
     public void solve(String mazeName, String algorithm) throws Exception {
         if (mHMap == null) {
@@ -126,7 +125,6 @@ public class MyModel extends Observable implements Model {
         });
 
     }
-
     @Override
     public String displaySolution(String mazeName) throws Exception {
         List<String[]> list = new ArrayList<>(sMap.keySet());
@@ -146,7 +144,6 @@ public class MyModel extends Observable implements Model {
 
 
     }
-
     @Override
     public String display(String name) throws Exception {
         if (mHMap == null) return "You need to create maze first!\n";
@@ -155,12 +152,10 @@ public class MyModel extends Observable implements Model {
         } else
             return "No maze named:" + name + " found\n";
     }
-
     @Override
     public long fileSize(String name) throws Exception {
         return 0;
     }
-
     @Override
     public int[][] getCrossByX(int index, String name) {
 
@@ -172,7 +167,6 @@ public class MyModel extends Observable implements Model {
         }
         return null;
     }
-
     @Override
     public int[][] getCrossByY(int index, String name) {
         if (mHMap.containsKey(name))
@@ -183,7 +177,6 @@ public class MyModel extends Observable implements Model {
         }
         return null;
     }
-
     @Override
     public int[][] getCrossByZ(int index, String name) {
         if (mHMap.containsKey(name))
@@ -194,12 +187,10 @@ public class MyModel extends Observable implements Model {
         }
         return null;
     }
-
     @Override
     public int mazeSize(String name) throws Exception {
         return 0;
     }
-
     @Override
     public String dir(String path) throws NullPointerException {
         File f = new File(path);
@@ -212,7 +203,6 @@ public class MyModel extends Observable implements Model {
         return listpath;
 
     }
-
     @Override
     public boolean saveMaze(String fileName, String mazeName) {
         MyCompressorOutputStream e = null;
@@ -227,7 +217,6 @@ public class MyModel extends Observable implements Model {
         }
         return false;
     }
-
     @Override
     public boolean loadMaze(String fileName, String mazeName) throws IOException {
         MyDecompressorInputStream in = null;
@@ -245,7 +234,6 @@ public class MyModel extends Observable implements Model {
         }
         return false;
     }
-
     public boolean saveHashMap() throws IOException {
         if (sMap == null) return false;
         File f = new File("data.zip");
@@ -275,7 +263,6 @@ public class MyModel extends Observable implements Model {
         return true;
 
     }
-
     public boolean loadHashMap() throws IOException {
         unZipIt("data.zip");
         String s=new String();

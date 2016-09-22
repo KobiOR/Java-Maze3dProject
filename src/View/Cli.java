@@ -1,14 +1,10 @@
 package View;
 
-import Presenters.Command;
 import Presenters.Presenter;
-
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.HashMap;
 import java.util.Observable;
-import java.util.concurrent.TimeUnit;
 
 /**
  * Created by orrko_000 on 12/09/2016.
@@ -31,7 +27,7 @@ public class Cli extends Observable {
                     try {
                         String[] input = in.readLine().split(" ");
                         if(input[0].equals("test"))test();
-                        else notifyObservers(input);
+                        else {setChanged();notifyObservers(input);}
 
                     } catch (IOException e) {
                         e.printStackTrace();
