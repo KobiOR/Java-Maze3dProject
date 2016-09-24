@@ -1,4 +1,4 @@
-package View;
+package Views;
 
 import Presenters.Presenter;
 import org.eclipse.swt.SWT;
@@ -15,15 +15,16 @@ import org.eclipse.swt.widgets.Text;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
+import java.util.Observable;
 
 
-public class MyAsciiArtMaker extends BasicWindow implements View {
+public class MyAsciiArtMaker extends BaseWindow implements View {
 
     Text asciiText;
     String fileName;
     private Presenter p;
     public MyAsciiArtMaker(String title, int width, int height) {
-        super(title, width, height);
+        super();
     }
     @Override
     public void initWidgets() {
@@ -106,9 +107,7 @@ public class MyAsciiArtMaker extends BasicWindow implements View {
     public void display(int[][] maze3d) {
 
     }
-    public void start() {
-        run();
-    }
+
     @Override
     public void setCli(Cli c) {
 
@@ -119,5 +118,10 @@ public class MyAsciiArtMaker extends BasicWindow implements View {
     }
     public void setController(Presenter p) {
         this.p = p;
+    }
+
+    @Override
+    public void update(Observable o, Object arg) {
+
     }
 }

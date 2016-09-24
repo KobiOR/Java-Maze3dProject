@@ -1,16 +1,18 @@
-package View;
+package Views;
 
 import java.io.IOException;
+import java.util.Observable;
+
 import static mazeGenerators.Maze3dGenerator.*;
 
 /**
  * Created by orrko_000 on 12/09/2016.
  */
-public class MyView extends BasicWindow implements View {
+public class MyView extends BaseWindow implements View {
     private Cli cmdLine;
 
     public MyView(String title, int width, int height) {
-        super(title, width, height);
+        super();
     }
     public void start() throws IOException {
         instruction();
@@ -56,5 +58,9 @@ public class MyView extends BasicWindow implements View {
 
     }
 
+    @Override
+    public void update(Observable o, Object arg) {
+
+    }
 }
 

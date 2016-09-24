@@ -1,4 +1,4 @@
-package View;
+package Views;
 
 import Presenters.Presenter;
 import java.io.BufferedReader;

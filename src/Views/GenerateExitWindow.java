@@ -1,4 +1,4 @@
-package GUI;
+package Views;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionEvent;
@@ -27,19 +27,16 @@ public class GenerateExitWindow extends DialogWindow  {
             @Override
             public void widgetSelected(SelectionEvent arg0) {
                 MessageBox msg = new MessageBox(shell, SWT.OK);
-                msg.setText("Title");
                 //msg.setMessage("Button was clicked");
 
                 msg.open();
                 shell.close();
             }
-
             @Override
             public void widgetDefaultSelected(SelectionEvent arg0) {
 
             }
         });
-        //shell.setDefaultButton(yesButton);
 
 
         Button noButton = new Button(shell, SWT.PUSH);
@@ -56,7 +53,6 @@ public class GenerateExitWindow extends DialogWindow  {
                 msg.open();
                 shell.close();
             }
-
             @Override
             public void widgetDefaultSelected(SelectionEvent arg0) {
 

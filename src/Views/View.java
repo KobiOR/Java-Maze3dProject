@@ -1,6 +1,4 @@
-package View;
-
-import Presenters.Presenter;
+package Views;
 
 import java.io.IOException;
 

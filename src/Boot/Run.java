@@ -1,7 +1,7 @@
 package Boot;
 
-import View.View;
-import View.MyView;
+import Views.MazeWindow;
+import Views.View;
 import Presenters.Presenter;
 import Model.Model;
 import Model.MyModel;
@@ -12,7 +12,7 @@ import java.util.Observable;
 public class Run{
 
     public static void main(String[] args) throws IOException {
-        View myView = new MyView("HW",800, 600);
+        View myView = new MazeWindow();
         Model myModel = new MyModel();
         Presenter c = new Presenter(myView,myModel);
         ((Observable)myView).addObserver(c);

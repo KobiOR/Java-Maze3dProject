@@ -1,15 +1,19 @@
-package GUI;
+package Views;
 
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Shell;
 
-public abstract class BaseWindow {
+import java.io.IOException;
+import java.util.Observable;
+import java.util.Observer;
+
+public abstract class BaseWindow extends Observable implements Observer {
 	protected Display display;
 	protected Shell shell;	
 	
 	protected abstract void initWidgets();
 	
-	public void start() {
+	public void start() throws IOException {
 		display = new Display();
 		shell = new Shell(display);
 		

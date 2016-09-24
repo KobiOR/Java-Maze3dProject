@@ -1,9 +1,10 @@
-package GUI;
+package Views;
 
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Shell;
+import java.util.Observable;
 
-public abstract class DialogWindow {
+public abstract class DialogWindow extends Observable {
 	protected Shell shell;	
 	
 	protected abstract void initWidgets();

@@ -1,4 +1,4 @@
-package GUI;
+package Views;
 
 import java.awt.Graphics;
 
@@ -8,8 +8,6 @@ import org.eclipse.swt.graphics.Image;
 
 public class Player {
 	private Coordinate c;
-
-
 	private Image img;
 
 	public Coordinate getC() {

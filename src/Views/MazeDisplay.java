@@ -1,7 +1,6 @@
-package GUI;
+package Views;
 
 import java.lang.*;
-import java.util.Timer;
 import java.util.TimerTask;
 
 import mazeGenerators.*;

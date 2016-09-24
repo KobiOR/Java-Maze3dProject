@@ -2,8 +2,8 @@ package Presenters;
 
 import Model.Model;
 import Presenters.Commands.*;
-import View.View;
-import View.Cli;
+import Views.View;
+import Views.Cli;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
@@ -11,6 +11,8 @@ import java.io.PrintWriter;
 import java.util.HashMap;
 import java.util.Observable;
 import java.util.Observer;
+
+import static java.lang.System.exit;
 
 /**
  * Created by orrko_000 on 12/09/2016.
@@ -39,9 +41,9 @@ public class Presenter implements Observer {
         String str=object.getClass().getName();
         switch (str)
         {
-            case "View.Cli":{doCommand((String[])arg);break;}
+            case "Views.Cli":{doCommand((String[])arg);break;}
             case "Model.MyModel":{cView.display((String)arg);break;}
-            default:{cView.display("Error on update");}
+            default:{exit(1);}
         }
 
     }
