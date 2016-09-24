@@ -1,5 +1,7 @@
 package Views;
 
+import Presenters.Presenter;
+
 import java.io.IOException;
 import java.util.Observable;
 
@@ -8,9 +10,8 @@ import static mazeGenerators.Maze3dGenerator.*;
 /**
  * Created by orrko_000 on 12/09/2016.
  */
-public class MyView extends BaseWindow implements View {
+public class MyView<T> extends BaseWindow  {
     private Cli cmdLine;
-
     public MyView(String title, int width, int height) {
         super();
     }
@@ -30,6 +31,10 @@ public class MyView extends BaseWindow implements View {
     @Override
     public void display(String str) {
         cmdLine.displaymessage(str);
+    }
+    @Override
+    public void display(Object tValue) {
+
     }
     @Override
     public void display(int[][] maze3d) {
@@ -57,10 +62,9 @@ public class MyView extends BaseWindow implements View {
         cmdLine.displaymessage(ANSI_RED+ANSI_BOLD+"To exit press:"+ANSI_BOLD_END+"exit"+ANSI_RESET);
 
     }
-
     @Override
     public void update(Observable o, Object arg) {
-
+        notifyObservers(arg);
     }
 }
 

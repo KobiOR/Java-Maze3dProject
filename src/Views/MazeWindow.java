@@ -1,5 +1,9 @@
 package Views;
 
+import Views.Widget.DialogWindow;
+import Views.Widget.GenerateExitWindow;
+import Views.Widget.GenerateMazeWindow;
+import mazeGenerators.Maze3d;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.SelectionListener;
@@ -8,14 +12,19 @@ import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.layout.RowLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.MessageBox;
 
 import java.lang.*;
 import java.util.Observable;
+import java.util.Observer;
 
-public class MazeWindow extends BaseWindow implements View  {
+public class MazeWindow<T> extends BaseWindow {
 
 	private MazeDisplay mazeDisplay;
-	private java.lang.Character character;
+	private Character character;
+	BaseWindow b=this;
+
+
 	@Override
 	protected void initWidgets() {
 		GridLayout grid = new GridLayout(2, false);
@@ -28,13 +37,13 @@ public class MazeWindow extends BaseWindow implements View  {
 		Button btnGenerateMaze = new Button(buttons, SWT.PUSH);
 		btnGenerateMaze.setText("Generate maze");
 		btnGenerateMaze.addSelectionListener(new SelectionListener() {
-
 			@Override
 			public void widgetSelected(SelectionEvent arg0) {
-				GenerateMazeWindow win = new GenerateMazeWindow();
+				DialogWindow win = new GenerateMazeWindow();
+				win.addObserver(b);
 				win.start(display);
-			}
 
+			}
 			@Override
 			public void widgetDefaultSelected(SelectionEvent arg0) {
 				// TODO Auto-generated method stub
@@ -49,8 +58,8 @@ public class MazeWindow extends BaseWindow implements View  {
 			@Override
 			public void widgetSelected(SelectionEvent arg0) {
 				GenerateMazeWindow win = new GenerateMazeWindow();
-				win.start(display);
-			}
+					win.start(display);
+				}
 
 			@Override
 			public void widgetDefaultSelected(SelectionEvent arg0) {
@@ -58,8 +67,6 @@ public class MazeWindow extends BaseWindow implements View  {
 
 			}
 		});
-
-
 
 
 		Button saveMaze = new Button(buttons, SWT.PUSH);
@@ -68,8 +75,7 @@ public class MazeWindow extends BaseWindow implements View  {
 
 			@Override
 			public void widgetSelected(SelectionEvent arg0) {
-				GenerateMazeWindow win = new GenerateMazeWindow();
-				win.start(display);
+				notifyObservers("save_maze "+mazeDisplay.mazeName+ " "+"c:// ");
 			}
 
 			@Override
@@ -78,8 +84,6 @@ public class MazeWindow extends BaseWindow implements View  {
 
 			}
 		});
-
-
 
 		Button btnSolveMaze = new Button(buttons, SWT.PUSH);
 		btnSolveMaze.setText("Solve maze");
@@ -98,15 +102,16 @@ public class MazeWindow extends BaseWindow implements View  {
 			}
 		});
 
-
 		Button bExit = new Button(buttons, SWT.PUSH);
 		bExit.setText("Exit");
 		bExit.addSelectionListener(new SelectionListener() {
 
 			@Override
 			public void widgetSelected(SelectionEvent arg0) {
-				GenerateExitWindow win = new GenerateExitWindow();
+				DialogWindow win = new GenerateExitWindow();
+				win.addObserver(b);
 				win.start(display);
+
 			}
 
 			@Override
@@ -116,34 +121,43 @@ public class MazeWindow extends BaseWindow implements View  {
 			}
 		});
 
-
-		mazeDisplay = new MazeDisplay(shell, SWT.BORDER);	
+		mazeDisplay = new MazeDisplay(shell, SWT.BORDER);
 		mazeDisplay.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
 		mazeDisplay.setFocus();
-	}
-
-	@Override
-	public void update(Observable o, Object arg) {
 
 	}
-
 	@Override
 	public int getUserCommand() {
 		return 0;
 	}
-
 	@Override
 	public void display(String str) {
+		setChanged();
+		MessageBox msg = new MessageBox(b.shell, SWT.OK);
+		msg.setText("Message");
+		msg.setMessage(str);
+		msg.open();
+	}
 
+	@Override
+	public void display(Object tValue) {
+		if (tValue.getClass().getName()=="String"){display((String)tValue);return;}
+		if(tValue.getClass().getName()=="mazeGenerators.Maze3d") {
+		mazeDisplay.setMyMaze((Maze3d) tValue);
+		}
 	}
 
 	@Override
 	public void display(int[][] maze3d) {
-
 	}
-
 	@Override
 	public void setCli(Cli c) {
-
+	}
+	@Override
+	public void update(Observable o, Object arg) {
+		setChanged();
+		String s=(String)arg;
+		String[] str=s.split(" ");
+		notifyObservers(str);
 	}
 }

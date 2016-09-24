@@ -51,16 +51,17 @@ public class MyModel extends Observable implements Model {
                 SimpleMaze3dGenerator SMG = new SimpleMaze3dGenerator();
                 GrowingTreeGenerator gt = new GrowingTreeGenerator();
                 try {
-                    if (algoname.equals("GrowingTree")) {
+                    if (algoname.equals("Growing_Tree")) {
                         for (myMaze = gt.Generate(mHeight, fHeight, fWidth); !SMG.verityPathOnMaze(myMaze); myMaze = gt.Generate(mHeight, fHeight, fWidth))
                             ;
                         mHMap.put(mName, myMaze);
                     } else {
-                        for (myMaze = gt.Generate(mHeight, fHeight, fWidth); !SMG.verityPathOnMaze(myMaze); myMaze = gt.Generate(mHeight, fHeight, fWidth))
+                        for (myMaze = SMG.Generate(mHeight, fHeight, fWidth); !SMG.verityPathOnMaze(myMaze); myMaze = gt.Generate(mHeight, fHeight, fWidth))
                             ;
                         mHMap.put(mName, myMaze);
                     }
                     setChanged();
+                    notifyObservers(myMaze);
                     notifyObservers("Maze " + mName + " created!");
 
                 } catch (NullPointerException e) {

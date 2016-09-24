@@ -4,7 +4,6 @@ import Model.Model;
 import Presenters.Commands.*;
 import Views.View;
 import Views.Cli;
-
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
@@ -41,8 +40,9 @@ public class Presenter implements Observer {
         String str=object.getClass().getName();
         switch (str)
         {
+            case "Views.MazeWindow":{doCommand((String[])arg);break;}
             case "Views.Cli":{doCommand((String[])arg);break;}
-            case "Model.MyModel":{cView.display((String)arg);break;}
+            case "Model.MyModel":{cView.display(arg);break;}
             default:{exit(1);}
         }
 

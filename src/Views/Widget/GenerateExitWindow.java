@@ -1,4 +1,4 @@
-package Views;
+package Views.Widget;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionEvent;
@@ -23,13 +23,10 @@ public class GenerateExitWindow extends DialogWindow  {
         yesButton.setLayoutData(new GridData(SWT.CENTER, SWT.LEFT, false, false, 0,0));
         yesButton.setText("Yes");
         yesButton.addSelectionListener(new SelectionListener() {
-
             @Override
             public void widgetSelected(SelectionEvent arg0) {
-                MessageBox msg = new MessageBox(shell, SWT.OK);
-                //msg.setMessage("Button was clicked");
-
-                msg.open();
+                setChanged();
+                notifyObservers("exit");
                 shell.close();
             }
             @Override
@@ -48,7 +45,7 @@ public class GenerateExitWindow extends DialogWindow  {
             public void widgetSelected(SelectionEvent arg0) {
                 MessageBox msg = new MessageBox(shell, SWT.OK);
                 msg.setText("Title");
-                //msg.setMessage("Button was clicked");
+                msg.setMessage("Button was clicked");
 
                 msg.open();
                 shell.close();
@@ -61,4 +58,5 @@ public class GenerateExitWindow extends DialogWindow  {
         shell.setDefaultButton(noButton);
 
     }
+
 }

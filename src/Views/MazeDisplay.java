@@ -1,8 +1,8 @@
 package Views;
 
 import java.lang.*;
+import java.util.Timer;
 import java.util.TimerTask;
-
 import mazeGenerators.*;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.KeyEvent;
@@ -14,18 +14,16 @@ import org.eclipse.swt.widgets.Canvas;
 import org.eclipse.swt.widgets.Composite;
 
 public class MazeDisplay extends Canvas {
-	
+
+
 	private Maze3d myMaze;
-	private Maze3dType mBuilder;
 	private Player player;
+	String mazeName;
 
 	public MazeDisplay(Composite parent, int style) {
 		super(parent, style);
-		mBuilder=new GrowingTreeGenerator();
-		myMaze=mBuilder.Generate(1,23,47);
-		player = new Player();
-		player.setPos(myMaze.getEntry());
-						
+
+
 		this.addKeyListener(new KeyListener() {
 			
 			@Override
@@ -67,45 +65,56 @@ public class MazeDisplay extends Canvas {
 	    this.addPaintListener(new PaintListener() {
 			@Override
 		public void paintControl(PaintEvent e) {
-				e.gc.setForeground(new Color(null,0,0,0));
-				   e.gc.setBackground(new Color(null,0,0,0));
-				   
+				if(myMaze==null) {
+					e.gc.setForeground(new Color(null, 0, 0, 0));
+					e.gc.setBackground(new Color(null, 0, 0, 0));
+					}
+				else {
+					e.gc.setForeground(new Color(null, 0, 0, 0));
+					e.gc.setBackground(new Color(null, 0, 0, 0));
 
-				   int width=getSize().x;
-				   int height=getSize().y;
 
-				   int w=width/myMaze.getfWidth();
-				   int h=height/myMaze.getfHeight();
+					int width = getSize().x;
+					int height = getSize().y;
 
-				   for(int i=0;i<myMaze.getfHeight();i++)
-				      for(int j=0;j<myMaze.getfWidth();j++){
-				          int x=j*w;
-				          int y=i*h;
-				          if(myMaze.WallExist(new Coordinate(1,i,j)))
-				              e.gc.fillRectangle(x,y,w,h);
-				      }
-				   
-				 
-				   player.draw(w, h, e.gc);
-				
+					int w = width / myMaze.getfWidth();
+					int h = height / myMaze.getfHeight();
+
+					for (int i = 0; i < myMaze.getfHeight(); i++)
+						for (int j = 0; j < myMaze.getfWidth(); j++) {
+							int x = j * w;
+							int y = i * h;
+							if (myMaze.WallExist(new Coordinate(1, i, j)))
+								e.gc.fillRectangle(x, y, w, h);
+						}
+
+
+					player.draw(w, h, e.gc);
+				}
 			}
 		});
 		TimerTask task = new TimerTask() {
-			
+
 			@Override
-			public void run() {	
-				getDisplay().syncExec(new Runnable() {					
+			public void run() {
+				getDisplay().syncExec(new Runnable() {
 
 					@Override
 					public void run() {
 						redraw();
 					}
 				});
-				
+
 			}
 		};
-		//Timer timer = new Timer();
-		//timer.scheduleAtFixedRate(task, 0, 500);
+		Timer timer = new Timer();
+		timer.scheduleAtFixedRate(task, 0, 500);
+	}
+	public void setMyMaze(Maze3d myMaze) {
+		this.myMaze = new Maze3d(myMaze);
+		player = new Player();
+		player.setPos(myMaze.getEntry());
+
 	}
 
 }
