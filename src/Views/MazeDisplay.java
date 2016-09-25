@@ -150,8 +150,7 @@ public class MazeDisplay extends Canvas {
 		task=null;
 		dispose();
 	}
-	public void checkPosition()
-	{
+	public void checkPosition(){
 		if (player.getPos().getcMazeHeight()==myMaze.getmHeight())
 		{
 			exit();

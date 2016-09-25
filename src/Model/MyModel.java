@@ -29,6 +29,7 @@ public class MyModel extends Observable implements Model {
     private HashMap<String, Maze3d> mHMap = null;
     private HashMap<String[], Solution<Coordinate>> sMap;
     private Presenters.Properties p;
+
     public MyModel() {
        p = PropertiesLoader.getInstance().getProperties();
         executor = Executors.newFixedThreadPool(1);
@@ -333,5 +334,25 @@ public class MyModel extends Observable implements Model {
 
 
     }
+    public void changeProperties(String name, String value) throws IOException {
+        if(name.equals("ChangeGenerate")){
+            if(value.equals("DFS") || value.equals("RDC")|| value.equals("SimpleMaze")){
+                p.setGenerateMazeAlgorithm(value);
+            }else{
+                throw new IOException("Invalid Algorithm Name");
+            }
 
+        }else if(name.equals("ChangeSolve")){
+            if(value.equals("BFS") || value.equals("DFS")){
+                p.setSolveMazeAlgorithm(value);
+            }else{
+                throw new IOException("Invalid Algorithm Name");
+            }
+        }else{
+            throw new IOException("Invalid Parameter name");
+        }
+
+        setChanged();
+        notifyObservers("change_properties_notify_command " + name);
+    }
 }

@@ -64,7 +64,7 @@ public class GenerateMazeWindow extends DialogWindow {
 		btnGenerateMaze.addSelectionListener(new SelectionListener() {
 			
 			@Override
-			public void widgetSelected(SelectionEvent arg0) {				
+			public void widgetSelected(SelectionEvent arg0) {
 				MessageBox msg = new MessageBox(shell, SWT.OK);
 				msg.setText("Title");
 				int mHeight = Integer.parseInt(mHeightText.getText());

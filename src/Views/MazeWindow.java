@@ -1,8 +1,6 @@
 package Views;
 
-import Views.Widget.DialogWindow;
-import Views.Widget.GenerateExitWindow;
-import Views.Widget.GenerateMazeWindow;
+import Views.Widget.*;
 import mazeGenerators.Maze3d;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionEvent;
@@ -12,8 +10,9 @@ import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.layout.RowLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
-import org.eclipse.swt.widgets.MessageBox;
 import java.lang.*;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Observable;
 
 public class MazeWindow<T> extends BaseWindow {
@@ -21,8 +20,7 @@ public class MazeWindow<T> extends BaseWindow {
 	private MazeDisplay mazeDisplay;
 	private Character character;
 	BaseWindow b=this;
-
-
+	List<DialogWindow> dView=new ArrayList<>();
 	@Override
 	protected void initWidgets() {
 		GridLayout grid = new GridLayout(2, false);
@@ -90,8 +88,11 @@ public class MazeWindow<T> extends BaseWindow {
 
 			@Override
 			public void widgetSelected(SelectionEvent arg0) {
-				GenerateExitWindow win = new GenerateExitWindow();
+
+				DialogWindow win = new GenerateSolveMaze(mazeDisplay.mazeName);
+				win.addObserver(b);
 				win.start(display);
+				dView.add(win);
 			}
 
 			@Override
@@ -110,8 +111,6 @@ public class MazeWindow<T> extends BaseWindow {
 				DialogWindow win = new GenerateExitWindow();
 				win.addObserver(b);
 				win.start(display);
-
-
 			}
 
 			@Override
@@ -132,15 +131,13 @@ public class MazeWindow<T> extends BaseWindow {
 	}
 	@Override
 	public void display(String str) {
-		setChanged();
-		MessageBox msg = new MessageBox(b.shell, SWT.OK);
-		msg.setText("Message");
-		msg.setMessage(str);
-		msg.open();
-	}
+			GenerateNoteWindow g=new GenerateNoteWindow(str);
+			g.start(display);
+			setChanged();
+			}
 	@Override
 	public void display(Object tValue) {
-		if (tValue.getClass().getName()=="String"){display((String)tValue);return;}
+		if (tValue.getClass().getName()=="String" ||tValue.getClass().getName()=="java.lang.String"){display((String)tValue);return;}
 		if(tValue.getClass().getName()=="mazeGenerators.Maze3d") {
 		mazeDisplay.setMyMaze((Maze3d) tValue);
 		}
@@ -156,6 +153,7 @@ public class MazeWindow<T> extends BaseWindow {
 		setChanged();
 		String s=(String)arg;
 		String[] str=s.split(" ");
+		if(str[0].equals("generate_maze"))mazeDisplay.mazeName=new String(str[1]);
 		if(str.equals("exit"))mazeDisplay.exit();
 		notifyObservers(str);
 	}
