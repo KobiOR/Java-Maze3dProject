@@ -13,10 +13,8 @@ import org.eclipse.swt.layout.RowLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.MessageBox;
-
 import java.lang.*;
 import java.util.Observable;
-import java.util.Observer;
 
 public class MazeWindow<T> extends BaseWindow {
 
@@ -39,6 +37,7 @@ public class MazeWindow<T> extends BaseWindow {
 		btnGenerateMaze.addSelectionListener(new SelectionListener() {
 			@Override
 			public void widgetSelected(SelectionEvent arg0) {
+
 				DialogWindow win = new GenerateMazeWindow();
 				win.addObserver(b);
 				win.start(display);
@@ -46,7 +45,7 @@ public class MazeWindow<T> extends BaseWindow {
 			}
 			@Override
 			public void widgetDefaultSelected(SelectionEvent arg0) {
-				// TODO Auto-generated method stub
+
 
 			}
 		});
@@ -112,6 +111,7 @@ public class MazeWindow<T> extends BaseWindow {
 				win.addObserver(b);
 				win.start(display);
 
+
 			}
 
 			@Override
@@ -138,7 +138,6 @@ public class MazeWindow<T> extends BaseWindow {
 		msg.setMessage(str);
 		msg.open();
 	}
-
 	@Override
 	public void display(Object tValue) {
 		if (tValue.getClass().getName()=="String"){display((String)tValue);return;}
@@ -146,7 +145,6 @@ public class MazeWindow<T> extends BaseWindow {
 		mazeDisplay.setMyMaze((Maze3d) tValue);
 		}
 	}
-
 	@Override
 	public void display(int[][] maze3d) {
 	}
@@ -158,6 +156,7 @@ public class MazeWindow<T> extends BaseWindow {
 		setChanged();
 		String s=(String)arg;
 		String[] str=s.split(" ");
+		if(str.equals("exit"))mazeDisplay.exit();
 		notifyObservers(str);
 	}
 }

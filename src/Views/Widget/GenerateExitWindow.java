@@ -25,6 +25,7 @@ public class GenerateExitWindow extends DialogWindow  {
         yesButton.addSelectionListener(new SelectionListener() {
             @Override
             public void widgetSelected(SelectionEvent arg0) {
+
                 setChanged();
                 notifyObservers("exit");
                 shell.close();

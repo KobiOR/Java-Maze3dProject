@@ -51,7 +51,7 @@ public class MyModel extends Observable implements Model {
                 SimpleMaze3dGenerator SMG = new SimpleMaze3dGenerator();
                 GrowingTreeGenerator gt = new GrowingTreeGenerator();
                 try {
-                    if (algoname.equals("Growing_Tree")) {
+                    if (algoname.equals("Growin_Tree")) {
                         for (myMaze = gt.Generate(mHeight, fHeight, fWidth); !SMG.verityPathOnMaze(myMaze); myMaze = gt.Generate(mHeight, fHeight, fWidth))
                             ;
                         mHMap.put(mName, myMaze);
