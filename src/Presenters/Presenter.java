@@ -40,6 +40,7 @@ public class Presenter implements Observer {
         String str=object.getClass().getName();
         switch (str)
         {
+
             case "Views.MazeWindow":{doCommand((String[])arg);break;}
             case "Views.Cli":{doCommand((String[])arg);break;}
             case "Model.MyModel":{cView.display(arg);break;}

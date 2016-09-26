@@ -4,6 +4,8 @@ import java.lang.*;
 import java.util.Timer;
 import java.util.TimerTask;
 import java.util.Vector;
+
+import Views.Widget.GenerateNoteWindow;
 import mazeGenerators.*;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.KeyEvent;
@@ -136,9 +138,9 @@ public class MazeDisplay extends Canvas {
 			}
 		};
 		Timer timer = new Timer();
-		timer.scheduleAtFixedRate(task, 0, 50);
+        timer.scheduleAtFixedRate(task, 0, 100);
 
-	}
+    }
 	public void setMyMaze(Maze3d myMaze) {
 		this.myMaze = new Maze3d(myMaze);
 		player = new Player();
@@ -172,5 +174,10 @@ public class MazeDisplay extends Canvas {
 	}
 
 
+	}
+	public void display(String str) {
+		GenerateNoteWindow g=new GenerateNoteWindow(str);
+		g.start(super.getDisplay());
+		//TODO AAA
 	}
 }

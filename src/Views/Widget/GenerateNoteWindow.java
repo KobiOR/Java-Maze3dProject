@@ -1,11 +1,7 @@
 package Views.Widget;
 
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.events.SelectionEvent;
-import org.eclipse.swt.events.SelectionListener;
-import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
-import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.MessageBox;
 
 /**
@@ -14,7 +10,7 @@ import org.eclipse.swt.widgets.MessageBox;
 public class GenerateNoteWindow extends DialogWindow {
     String note;
     public GenerateNoteWindow(String str) {
-   note=str;
+        note=str;
     }
 
     @Override
@@ -22,11 +18,11 @@ public class GenerateNoteWindow extends DialogWindow {
         shell.setText("Are you sure?");
         shell.setSize(300, 100);
         shell.setLayout(new GridLayout(3, false));
-        MessageBox msg = new MessageBox(shell, SWT.OK);
+        MessageBox msg = new MessageBox(super.shell, SWT.OK);
         msg.setText("Title");
         msg.setMessage("Button was clicked");
         msg.open();
-        shell.close();
+
 
         }
     }

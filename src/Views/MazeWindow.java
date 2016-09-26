@@ -15,12 +15,12 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Observable;
 
-public class MazeWindow<T> extends BaseWindow {
+public class MazeWindow<T> extends BasicWindow {
 
 	private MazeDisplay mazeDisplay;
-	private Character character;
-	BaseWindow b=this;
+	BasicWindow b=this;
 	List<DialogWindow> dView=new ArrayList<>();
+
 	@Override
 	protected void initWidgets() {
 		GridLayout grid = new GridLayout(2, false);
@@ -39,7 +39,6 @@ public class MazeWindow<T> extends BaseWindow {
 				DialogWindow win = new GenerateMazeWindow();
 				win.addObserver(b);
 				win.start(display);
-
 			}
 			@Override
 			public void widgetDefaultSelected(SelectionEvent arg0) {
@@ -131,13 +130,11 @@ public class MazeWindow<T> extends BaseWindow {
 	}
 	@Override
 	public void display(String str) {
-			GenerateNoteWindow g=new GenerateNoteWindow(str);
-			g.start(display);
-			setChanged();
+				mazeDisplay.display(str);
 			}
 	@Override
 	public void display(Object tValue) {
-		if (tValue.getClass().getName()=="String" ||tValue.getClass().getName()=="java.lang.String"){display((String)tValue);return;}
+		if (tValue.getClass().getName()=="String" ||tValue.getClass().getName()=="java.lang.String"){this.display((String)tValue);return;}
 		if(tValue.getClass().getName()=="mazeGenerators.Maze3d") {
 		mazeDisplay.setMyMaze((Maze3d) tValue);
 		}
@@ -150,11 +147,16 @@ public class MazeWindow<T> extends BaseWindow {
 	}
 	@Override
 	public void update(Observable o, Object arg) {
-		setChanged();
 		String s=(String)arg;
 		String[] str=s.split(" ");
 		if(str[0].equals("generate_maze"))mazeDisplay.mazeName=new String(str[1]);
 		if(str.equals("exit"))mazeDisplay.exit();
+		setChanged();
 		notifyObservers(str);
+	}
+
+	@Override
+	public void run() {
+
 	}
 }

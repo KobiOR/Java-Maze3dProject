@@ -80,9 +80,9 @@ public class GenerateMazeWindow extends DialogWindow {
 
 				}
 				CurrentmazeName=new String(mazeNameext);
-				shell.close();
 				setChanged();
 				notifyObservers("generate_maze "+mazeNameext+" "+ mHeight+ " "+fHeight+ " "+ fWidth +" "+algo);
+				shell.close();
 			}
 			
 			@Override
