@@ -12,6 +12,7 @@ import mazeGenerators.SimpleMaze3dGenerator;
 import java.beans.XMLEncoder;
 import java.util.*;
 import java.util.Properties;
+import java.util.concurrent.locks.StampedLock;
 import java.util.zip.ZipInputStream;
 import java.io.*;
 import java.util.concurrent.*;
@@ -89,7 +90,7 @@ public class MyModel extends Observable implements Model {
             return;
         }
         Maze3d myMaze = mHMap.get(mazeName);
-        Solution<Coordinate> sol;
+        Solution<State<Coordinate>> sol;
         String[] st = {mazeName, algorithm};
         executor.submit(new Callable<Solution<Coordinate>>() {
             @Override
@@ -113,6 +114,8 @@ public class MyModel extends Observable implements Model {
                     }
                     setChanged();
                     notifyObservers("Maze: " + mazeName + " was solve with: " + algorithm + " algorithm");
+                    setChanged();
+                    notifyObservers(sol);
                     if (sMap == null)
                         sMap = new HashMap<>();
                     sMap.put(st, sol);

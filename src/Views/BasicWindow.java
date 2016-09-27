@@ -27,3 +27,4 @@ public abstract class BasicWindow extends Observable implements Observer,View,Ru
 	}
 
 }
+

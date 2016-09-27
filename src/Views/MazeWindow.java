@@ -1,10 +1,7 @@
 package Views;
 
-import Presenters.Presenter;
 import Views.Widget.*;
 import algorithms.search.Solution;
-import algorithms.search.State;
-import mazeGenerators.Coordinate;
 import mazeGenerators.Maze3d;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionEvent;
@@ -14,29 +11,32 @@ import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.layout.RowLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
+
 import javax.swing.*;
 import java.awt.*;
+import java.io.IOException;
 import java.lang.*;
-import java.util.ArrayList;
+import java.util.*;
 import java.util.List;
-import java.util.Observable;
 
 import static java.lang.System.exit;
+import static java.lang.Thread.sleep;
 
 public class MazeWindow<T> extends BasicWindow {
 
 	private JLabel label;
 	private MazeDisplay mazeDisplay;
-	BasicWindow b=this;
-	List<DialogWindow> dView=new ArrayList<>();
+	BasicWindow b = this;
+	List<DialogWindow> dView = new ArrayList<>();
 	String curr;
-
+	Button btnDisplaySolution;
+	boolean solutionAvailable = false;
 
 	@Override
 	protected void initWidgets() {
 		GridLayout grid = new GridLayout(2, false);
 		shell.setLayout(grid);
-		
+
 		Composite buttons = new Composite(shell, SWT.NONE);
 		RowLayout rowLayout = new RowLayout(SWT.VERTICAL);
 		buttons.setLayout(rowLayout);
@@ -50,7 +50,9 @@ public class MazeWindow<T> extends BasicWindow {
 				DialogWindow win = new GenerateMazeWindow();
 				win.addObserver(b);
 				win.start(display);
+				btnDisplaySolution.setEnabled(true);
 			}
+
 			@Override
 			public void widgetDefaultSelected(SelectionEvent arg0) {
 
@@ -65,8 +67,8 @@ public class MazeWindow<T> extends BasicWindow {
 			@Override
 			public void widgetSelected(SelectionEvent arg0) {
 				GenerateMazeWindow win = new GenerateMazeWindow();
-					win.start(display);
-				}
+				win.start(display);
+			}
 
 			@Override
 			public void widgetDefaultSelected(SelectionEvent arg0) {
@@ -75,14 +77,13 @@ public class MazeWindow<T> extends BasicWindow {
 			}
 		});
 
-
 		Button saveMaze = new Button(buttons, SWT.PUSH);
 		saveMaze.setText("Save maze");
 		saveMaze.addSelectionListener(new SelectionListener() {
 
 			@Override
 			public void widgetSelected(SelectionEvent arg0) {
-				notifyObservers("save_maze "+mazeDisplay.mazeName+ " "+"c:// ");
+				notifyObservers("save_maze " + mazeDisplay.mazeName + " " + "c:// ");
 			}
 
 			@Override
@@ -112,22 +113,19 @@ public class MazeWindow<T> extends BasicWindow {
 			}
 		});
 
-		Button btnDisplaySolution = new Button(buttons, SWT.PUSH);
+		btnDisplaySolution = new Button(buttons, SWT.PUSH);
 		btnDisplaySolution.setText("Display Solution");
-		btnDisplaySolution.addSelectionListener(new SelectionListener() {
-
+		btnDisplaySolution.setEnabled(solutionAvailable);
+		btnDisplaySolution.addSelectionListener(new SelectionListener()	{
 			@Override
-			public void widgetSelected(SelectionEvent arg0) {
+			public void widgetSelected(SelectionEvent e) {
+				mazeDisplay.status=false;
+				mazeDisplay.solve();
 
-				DialogWindow win = new GenerateDisplaySolution(null);
-				win.addObserver(b);
-				win.start(display);
-				dView.add(win);
 			}
 
 			@Override
 			public void widgetDefaultSelected(SelectionEvent arg0) {
-				// TODO Auto-generated method stub
 
 			}
 		});
@@ -170,15 +168,22 @@ public class MazeWindow<T> extends BasicWindow {
 		frame.setSize(300, 150);
 		frame.setLocation(200, 200);
 		frame.setVisible(true);
-		frame.add(new JButton("Thanks"),BorderLayout.NORTH);
-		}
+
+	}
 	@Override
 	public void display(Object tValue) {
-		if (tValue.getClass().getName()=="java.lang.String")display((String)tValue);
-		if(tValue.getClass().getName()=="mazeGenerators.Maze3d")
-		{
-		mazeDisplay.setMyMaze((Maze3d) tValue);
-			mazeDisplay.mazeName=this.curr;
+
+		if (tValue.getClass().getName() == "java.lang.String") {
+			display((String) tValue);
+			return;
+		}
+		if (tValue.getClass().getName() == "mazeGenerators.Maze3d") {
+			mazeDisplay.setMyMaze((Maze3d) tValue);
+			mazeDisplay.mazeName = this.curr;
+			return;
+		}
+		if (tValue.getClass().getName() == "algorithms.search.Solution") {
+			mazeDisplay.setSolution((Solution)tValue);
 		}
 	}
 	@Override
@@ -187,16 +192,15 @@ public class MazeWindow<T> extends BasicWindow {
 	@Override
 	public void setCli(Cli c) {
 	}
-
-
 	@Override
 	public void update(Observable o, Object arg) {
 		String[] strSplit = o.getClass().getName().split("\\.");
 		String s=(String)arg;
+		String[] str = s.split(" ");
+		switch (strSplit[0])
 		{
-			String[] str = s.split(" ");
-			switch (strSplit[0]) {
-				case "Views": {
+				case "Views":
+					{
 					if (str[0].equals("exit")){ exit(1);break;}
 					if (str[0].equals("generate_maze")) {
 						curr = new String(str[1]);
@@ -217,28 +221,19 @@ public class MazeWindow<T> extends BasicWindow {
 					notifyObservers(str);
 					break;
 				}
-				case "Solution": {
-					solve((Solution<T>) arg);
-					break;
-				}
-
-			}
-			//TODO לסדר את כל החרא פה! לעשות סוויץ קייס
 
 		}
+			//TODO לסדר את כל החרא פה! לעשות סוויץ קייס
+
+
 	}
+
 	@Override
 	public void run() {
 
 	}
-	void solve(Solution<T> sol)
-	{
-		List<State<T>> list=sol.getStates();
-		for (State<T> s:list)
-		{
-			mazeDisplay.player.setPos((Coordinate)s.getValue());
 
-		}
 
-	}
 }
+
+
