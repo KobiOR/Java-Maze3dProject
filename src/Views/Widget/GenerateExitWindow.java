@@ -6,7 +6,6 @@ import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
-import org.eclipse.swt.widgets.MessageBox;
 
 /**
  * Created by orrko_000 on 22/09/2016.
@@ -44,11 +43,6 @@ public class GenerateExitWindow extends DialogWindow  {
 
             @Override
             public void widgetSelected(SelectionEvent arg0) {
-                MessageBox msg = new MessageBox(shell, SWT.OK);
-                msg.setText("Title");
-                msg.setMessage("Button was clicked");
-
-                msg.open();
                 shell.close();
             }
             @Override

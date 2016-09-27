@@ -6,14 +6,13 @@ import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
-import org.eclipse.swt.widgets.Display;
-import org.eclipse.swt.widgets.MessageBox;
 
 /**
  * Created by orrko_000 on 25/09/2016.
  */
 public class GenerateSolveMaze extends DialogWindow  {
     private static String mazeName;
+
     public GenerateSolveMaze(String mName) {
         this.mazeName=mName;
     }
@@ -33,7 +32,9 @@ public class GenerateSolveMaze extends DialogWindow  {
                 setChanged();
                 notifyObservers("solve "+mazeName+ " DFS");
                 shell.close();
-            }
+
+                }
+
             @Override
             public void widgetDefaultSelected(SelectionEvent arg0) {
 

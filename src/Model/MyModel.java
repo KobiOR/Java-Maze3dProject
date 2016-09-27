@@ -62,8 +62,9 @@ public class MyModel extends Observable implements Model {
                         mHMap.put(mName, myMaze);
                     }
                     setChanged();
-                    notifyObservers(myMaze);
                     notifyObservers("Maze " + mName + " created!");
+                    setChanged();
+                    notifyObservers(myMaze);
 
                 } catch (NullPointerException e) {
                     System.out.println("invalid algorithm name");
@@ -139,8 +140,11 @@ public class MyModel extends Observable implements Model {
                 else {
                     b = true;
                     st += s[1] + sMap.get(s).toString() + "\n";
+                    setChanged();
+                    notifyObservers(sMap.get(s));
                 }
         }
+
         if (b) return st;
         else return "No found solution for:" + mazeName;
 
@@ -355,4 +359,5 @@ public class MyModel extends Observable implements Model {
         setChanged();
         notifyObservers("change_properties_notify_command " + name);
     }
+    //TODO לתקן את הקטע שאני שולח סולשן באמצעות סטרינג...נשלח פשוט סולישן ונעשה אבחנה בOBSERVABLE
 }

@@ -10,6 +10,7 @@ import org.eclipse.swt.widgets.MessageBox;
 public class GenerateNoteWindow extends DialogWindow {
     String note;
     public GenerateNoteWindow(String str) {
+        super();
         note=str;
     }
 
@@ -17,12 +18,11 @@ public class GenerateNoteWindow extends DialogWindow {
     protected void initWidgets() {
         shell.setText("Are you sure?");
         shell.setSize(300, 100);
-        shell.setLayout(new GridLayout(3, false));
+        shell.setLayout(new GridLayout(2, false));
         MessageBox msg = new MessageBox(super.shell, SWT.OK);
         msg.setText("Title");
         msg.setMessage("Button was clicked");
         msg.open();
-
 
         }
     }

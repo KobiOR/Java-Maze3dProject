@@ -14,14 +14,14 @@ import java.util.Observable;
 public class Run{
 
     public static void main(String[] args) throws IOException {
-        Properties p= PropertiesLoader.getInstance().getProperties();
+       // Properties p= PropertiesLoader.getInstance().getProperties();
 
         View myView = new MazeWindow();
         Model myModel = new MyModel();
         Presenter c = new Presenter(myView,myModel);
         ((Observable)myView).addObserver(c);
         ((Observable)myModel).addObserver(c);
-        myModel.loadHashMap();
+       // myModel.loadHashMap();
         myView.start();
         myModel.saveHashMap();
         myModel.saveProperties();

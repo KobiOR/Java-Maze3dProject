@@ -1,5 +1,7 @@
 package Views;
 
+import Presenters.Presenter;
+
 import java.io.IOException;
 import java.util.Observable;
 
@@ -22,7 +24,6 @@ public class MyView<T> extends BasicWindow {
     public void setCli(Cli c) {
 
     }
-
 
     @Override
     public int getUserCommand() {
@@ -65,6 +66,7 @@ public class MyView<T> extends BasicWindow {
     }
     @Override
     public void update(Observable o, Object arg) {
+        setChanged();
         notifyObservers(arg);
     }
 

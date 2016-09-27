@@ -1,11 +1,7 @@
 package Views;
 
 import java.lang.*;
-import java.util.Timer;
-import java.util.TimerTask;
-import java.util.Vector;
-
-import Views.Widget.GenerateNoteWindow;
+import java.util.*;
 import mazeGenerators.*;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.KeyEvent;
@@ -19,7 +15,7 @@ import org.eclipse.swt.widgets.Composite;
 public class MazeDisplay extends Canvas {
 
 	private Maze3d myMaze;
-	private Player player;
+	public Player player;
 	TimerTask task;
 	boolean status=false;
 	public String mazeName= "";
@@ -77,7 +73,8 @@ public class MazeDisplay extends Canvas {
 					e.gc.setForeground(new Color(null, 0, 0, 0));
 					e.gc.setBackground(new Color(null, 0, 0, 0));
 					}
-				else {
+
+						else {
 					if(player.getPos().getcMazeHeight()==myMaze.getmHeight()-1)exit();
 					e.gc.setForeground(new Color(null, 0, 0, 0));
 					e.gc.setBackground(new Color(null, 0, 0, 0));
@@ -131,6 +128,7 @@ public class MazeDisplay extends Canvas {
 
 					@Override
 					public void run() {
+
 						if(status)redraw();
 					}
 				});
@@ -175,9 +173,6 @@ public class MazeDisplay extends Canvas {
 
 
 	}
-	public void display(String str) {
-		GenerateNoteWindow g=new GenerateNoteWindow(str);
-		g.start(super.getDisplay());
-		//TODO AAA
-	}
+
+
 }

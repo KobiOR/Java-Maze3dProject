@@ -83,6 +83,7 @@ public class GenerateMazeWindow extends DialogWindow {
 				setChanged();
 				notifyObservers("generate_maze "+mazeNameext+" "+ mHeight+ " "+fHeight+ " "+ fWidth +" "+algo);
 				shell.close();
+
 			}
 			
 			@Override
