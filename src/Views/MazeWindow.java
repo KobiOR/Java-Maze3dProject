@@ -144,10 +144,20 @@ public class MazeWindow<T> extends BasicWindow {
 		btnDisplaySolution.addSelectionListener(new SelectionListener()	{
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				mazeDisplay.status=false;
-				mazeDisplay.solve();
 
-			}
+
+						display.asyncExec(new Runnable() {
+
+							@Override
+							public void run() {
+						mazeDisplay.solve();
+
+
+							}
+						});
+
+					}
+
 
 			@Override
 			public void widgetDefaultSelected(SelectionEvent arg0) {

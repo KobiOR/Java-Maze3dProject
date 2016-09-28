@@ -1,7 +1,4 @@
 package Views;
-
-import java.awt.Graphics;
-
 import mazeGenerators.Coordinate;
 import org.eclipse.swt.graphics.GC;
 import org.eclipse.swt.graphics.Image;

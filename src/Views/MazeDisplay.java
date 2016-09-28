@@ -179,19 +179,16 @@ public class MazeDisplay extends Canvas {
 
 	}
 	public synchronized void solve() {
-		status = false;
 
 		List<State<Coordinate>> list = mazeSolution.getStates();
 		Queue<Coordinate> q = new LinkedList<>();
 		for (State<Coordinate> s : list)
 			q.add((Coordinate) s.getValue());
-
-
-			TimerTask task = new TimerTask() {
+			TimerTask tasker = new TimerTask() {
 
 				@Override
 				public void run() {
-					getDisplay().syncExec(new Runnable() {
+					getDisplay().asyncExec(new Runnable() {
 
 						@Override
 						public void run() {
@@ -208,7 +205,7 @@ public class MazeDisplay extends Canvas {
 				}
 			};
 		Timer timer = new Timer();
-		timer.scheduleAtFixedRate(task, 0,2000);
+		timer.scheduleAtFixedRate(tasker, 0,500);
 	}
 	public Solution<Coordinate> getMazeSolution() {
 		if(mazeSolution!=null)return mazeSolution;
