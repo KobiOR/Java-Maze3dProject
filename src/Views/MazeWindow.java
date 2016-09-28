@@ -178,9 +178,9 @@ public class MazeWindow<T> extends BasicWindow {
 			@Override
 			public void windowClosed(WindowEvent e)
 			{
-				mazeDisplay.timer.cancel();
-				mazeDisplay.task.cancel();
-				mazeDisplay.status=false;
+		mazeDisplay.timer.cancel();
+		mazeDisplay.task.cancel();
+		mazeDisplay.status=false;
 				setChanged();
 				notifyObservers("exit");
 				shell.close();
@@ -221,7 +221,15 @@ public class MazeWindow<T> extends BasicWindow {
 			return;
 		}
 		if (tValue.getClass().getName() == "algorithms.search.Solution") {
-			mazeDisplay.setSolution((Solution)tValue);
+			display.asyncExec(new Runnable() {
+
+				@Override
+				public void run() {
+					mazeDisplay.setSolution((Solution)tValue);
+					mazeDisplay.solutionAvailable=true;
+				}
+			});
+
 		}
 	}
 	@Override
@@ -287,7 +295,7 @@ public class MazeWindow<T> extends BasicWindow {
 			}
 		};
 		Timer timer = new Timer();
-		timer.scheduleAtFixedRate(task, 0, 4*1000);
+		timer.scheduleAtFixedRate(task, 0,1500);
 
 
 	}

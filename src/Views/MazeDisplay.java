@@ -169,7 +169,9 @@ public class MazeDisplay extends Canvas {
 
 	}
 	public void setSolution(Solution sol){
-		EventQueue.invokeLater(new Runnable() {
+		getDisplay().asyncExec(new Runnable() {
+
+			@Override
 			public void run() {
 				mazeSolution=sol;
 			}

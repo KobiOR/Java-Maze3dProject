@@ -35,7 +35,6 @@ public class GenerateDisplaySolution<T> extends DialogWindow {
                 shell.close();
 
             }
-
             @Override
             public void widgetDefaultSelected(SelectionEvent arg0) {
 

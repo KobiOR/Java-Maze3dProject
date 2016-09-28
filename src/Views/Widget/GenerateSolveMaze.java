@@ -18,7 +18,6 @@ public class GenerateSolveMaze extends DialogWindow  {
     public GenerateSolveMaze(String mName) {
         this.mazeName=mName;
     }
-
     @Override
     protected void initWidgets() {
         shell.setText("Which algorithem ??");
@@ -34,7 +33,6 @@ public class GenerateSolveMaze extends DialogWindow  {
                 setChanged();
                 notifyObservers("solve "+mazeName+ " DFS");
                 shell.close();
-
                 }
 
             @Override
@@ -52,19 +50,17 @@ public class GenerateSolveMaze extends DialogWindow  {
             public void widgetSelected(SelectionEvent arg0) {
                 setChanged();
                 notifyObservers("solve "+mazeName+ " BFS");
+                shell.close();
             }
             @Override
             public void widgetDefaultSelected(SelectionEvent arg0) {
 
             }
         });
+
         shell.setDefaultButton(BFS);
-        shell.open();
-        while (!shell.isDisposed()) {
-            if (!shell.getDisplay().readAndDispatch())
-                shell.getDisplay().sleep();
-        }
-        shell.getDisplay().dispose();
+
+
     }
 
 }
