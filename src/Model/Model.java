@@ -112,10 +112,9 @@ public interface Model {
      * @return bollean
      */
     boolean saveMaze(String fileName, String mazeName);
-    public boolean saveHashMap() throws IOException;
-    public boolean loadHashMap() throws IOException;
+    boolean saveHashMap() throws IOException;
+    boolean loadHashMap() throws IOException;
     boolean loadMaze(String s, String s1) throws IOException;
-
     void saveProperties();
     /**
      * load the maze called "name" in the file called "fileName"

@@ -17,4 +17,5 @@ public interface View<T> {
     void display(int[][] maze3d);
     void start() throws IOException;
     void setCli(Cli c);
+    void display(Maze3d maze3d);
 }

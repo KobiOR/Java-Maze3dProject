@@ -157,6 +157,8 @@ public class MyModel extends Observable implements Model {
     public String display(String name) throws Exception {
         if (mHMap == null) return "You need to create maze first!\n";
         else if (mHMap.containsKey(name)) {
+            setChanged();
+            notifyObservers(mHMap.get(name));
             return mHMap.get(name).getMazeString();
         } else
             return "No maze named:" + name + " found\n";

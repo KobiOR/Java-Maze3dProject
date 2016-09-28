@@ -1,29 +1,35 @@
 package Views.Widget;
 
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.layout.GridLayout;
+import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.MessageBox;
+import org.eclipse.swt.widgets.Shell;
 
-/**
- * Created by orrko_000 on 25/09/2016.
- */
+
 public class GenerateNoteWindow extends DialogWindow {
-    String note;
-    public GenerateNoteWindow(String str) {
-        super();
-        note=str;
-    }
 
+    static private String note;
+    private static GenerateNoteWindow instance;
+
+    private GenerateNoteWindow(String str,Display d) {
+        super();
+        shell=new Shell(d);
+        note=str;
+        MessageBox msg = new MessageBox(shell, SWT.OK);
+        msg.setText(note);
+        msg.setMessage(note);
+        msg.open();
+    }
+    public static GenerateNoteWindow getInstance(String str,Display d) {
+        if (instance == null)
+            new GenerateNoteWindow(str, d);
+        return instance;
+
+    }
     @Override
     protected void initWidgets() {
-        shell.setText("Are you sure?");
-        shell.setSize(300, 100);
-        shell.setLayout(new GridLayout(2, false));
-        MessageBox msg = new MessageBox(super.shell, SWT.OK);
-        msg.setText("Title");
-        msg.setMessage("Button was clicked");
-        msg.open();
 
-        }
+
+
     }
-
+}

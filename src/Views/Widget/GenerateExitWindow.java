@@ -35,7 +35,6 @@ public class GenerateExitWindow extends DialogWindow  {
             }
         });
 
-
         Button noButton = new Button(shell, SWT.PUSH);
         noButton.setLayoutData(new GridData(SWT.LEFT_TO_RIGHT, SWT.RIGHT, false, false,0, 0));
         noButton.setText("No");

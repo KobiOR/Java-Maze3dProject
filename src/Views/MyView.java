@@ -1,6 +1,7 @@
 package Views;
 
 import Presenters.Presenter;
+import mazeGenerators.Maze3d;
 
 import java.io.IOException;
 import java.util.Observable;
@@ -22,6 +23,11 @@ public class MyView<T> extends BasicWindow {
 
     @Override
     public void setCli(Cli c) {
+
+    }
+
+    @Override
+    public void display(Maze3d maze3d) {
 
     }
 

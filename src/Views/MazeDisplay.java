@@ -16,9 +16,6 @@ import org.eclipse.swt.events.PaintListener;
 import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.widgets.Canvas;
 import org.eclipse.swt.widgets.Composite;
-
-import static java.lang.Thread.sleep;
-
 public class MazeDisplay extends Canvas {
 
 	private Maze3d myMaze;
@@ -29,7 +26,10 @@ public class MazeDisplay extends Canvas {
 	private int mHeight=1;
 	private Solution<Coordinate> mazeSolution=null;
 	boolean solutionAvailable=false;
+	boolean activeMaze=false;
+
 	Timer timer;
+
 	public MazeDisplay(Composite parent, int style) {
 		super(parent, style);
 		status=true;
@@ -84,6 +84,7 @@ public class MazeDisplay extends Canvas {
 				}
 
 				else if(status) {
+					activeMaze=true;
 					if(player.getPos().getcMazeHeight()==myMaze.getmHeight()-1)exit();
 					e.gc.setForeground(new Color(null, 0, 0, 0));
 					e.gc.setBackground(new Color(null, 0, 0, 0));
@@ -183,25 +184,29 @@ public class MazeDisplay extends Canvas {
 		for (State<Coordinate> s : list)
 			q.add((Coordinate) s.getValue());
 
-		while(!q.isEmpty())
-		{
-			Thread thread = new Thread(new Runnable() {
-				public synchronized void run() {
-					status=false;
-					try {
-						Thread.sleep(1);
-						player.setPos(q.poll());
-						start();
-					} catch (InterruptedException e) {
-						e.printStackTrace();
-					}
+
+			TimerTask task = new TimerTask() {
+
+				@Override
+				public void run() {
+					getDisplay().syncExec(new Runnable() {
+
+						@Override
+						public void run() {
+							if(!q.isEmpty())
+							{
+								player.setPos(q.poll());
+								mHeight=player.getPos().getcMazeHeight();
+							}
+
+
+						}
+					});
 
 				}
-
-			});thread.run();
-
-
-	     }
+			};
+		Timer timer = new Timer();
+		timer.scheduleAtFixedRate(task, 0,2000);
 	}
 	public Solution<Coordinate> getMazeSolution() {
 		if(mazeSolution!=null)return mazeSolution;

@@ -2,6 +2,9 @@ package Views;
 
 import Views.Widget.*;
 import algorithms.search.Solution;
+import com.sun.javafx.tk.*;
+import com.sun.javafx.tk.Toolkit;
+import javafx.concurrent.Task;
 import mazeGenerators.Maze3d;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionEvent;
@@ -11,29 +14,31 @@ import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.layout.RowLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
-
+import org.eclipse.swt.widgets.Display;
 import javax.swing.*;
 import java.awt.*;
-import java.io.IOException;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.lang.*;
 import java.util.*;
 import java.util.List;
+import java.util.Timer;
 
+import static com.sun.java.accessibility.util.AWTEventMonitor.addWindowListener;
 import static java.lang.System.exit;
-import static java.lang.Thread.sleep;
 
 public class MazeWindow<T> extends BasicWindow {
 
-	private JLabel label;
 	private MazeDisplay mazeDisplay;
 	BasicWindow b = this;
 	List<DialogWindow> dView = new ArrayList<>();
 	String curr;
 	Button btnDisplaySolution;
 	boolean solutionAvailable = false;
-
+	Button saveMaze;
 	@Override
 	protected void initWidgets() {
+
 		GridLayout grid = new GridLayout(2, false);
 		shell.setLayout(grid);
 
@@ -50,7 +55,6 @@ public class MazeWindow<T> extends BasicWindow {
 				DialogWindow win = new GenerateMazeWindow();
 				win.addObserver(b);
 				win.start(display);
-				btnDisplaySolution.setEnabled(true);
 			}
 
 			@Override
@@ -66,8 +70,17 @@ public class MazeWindow<T> extends BasicWindow {
 
 			@Override
 			public void widgetSelected(SelectionEvent arg0) {
-				GenerateMazeWindow win = new GenerateMazeWindow();
-				win.start(display);
+				Display.getDefault().asyncExec(new Runnable() {
+					public void run() {
+						GenerateLoadSaveWindow win=new GenerateLoadSaveWindow(true,mazeDisplay.mazeName);
+						win.addObserver(b);
+						win.start(display);
+						shell.open();
+
+				}
+				});
+
+
 			}
 
 			@Override
@@ -77,13 +90,20 @@ public class MazeWindow<T> extends BasicWindow {
 			}
 		});
 
-		Button saveMaze = new Button(buttons, SWT.PUSH);
+		saveMaze = new Button(buttons, SWT.PUSH);
 		saveMaze.setText("Save maze");
+		saveMaze.setEnabled(false);
 		saveMaze.addSelectionListener(new SelectionListener() {
 
 			@Override
 			public void widgetSelected(SelectionEvent arg0) {
-				notifyObservers("save_maze " + mazeDisplay.mazeName + " " + "c:// ");
+				Display.getDefault().asyncExec(new Runnable() {
+					public void run() {
+						GenerateLoadSaveWindow win=new GenerateLoadSaveWindow(false,mazeDisplay.mazeName);
+						win.addObserver(b);
+						win.start(display);
+					}
+				});
 			}
 
 			@Override
@@ -99,11 +119,16 @@ public class MazeWindow<T> extends BasicWindow {
 
 			@Override
 			public void widgetSelected(SelectionEvent arg0) {
+				Display.getDefault().asyncExec(new Runnable() {
+					public void run() {
+						DialogWindow win = new GenerateSolveMaze(mazeDisplay.mazeName);
+						win.addObserver(b);
+						win.start(display);
+						dView.add(win);
+					}
+				});
 
-				DialogWindow win = new GenerateSolveMaze(mazeDisplay.mazeName);
-				win.addObserver(b);
-				win.start(display);
-				dView.add(win);
+
 			}
 
 			@Override
@@ -148,9 +173,25 @@ public class MazeWindow<T> extends BasicWindow {
 			}
 		});
 
+		addWindowListener(new java.awt.event.WindowAdapter()
+		{
+			@Override
+			public void windowClosed(WindowEvent e)
+			{
+				mazeDisplay.timer.cancel();
+				mazeDisplay.task.cancel();
+				mazeDisplay.status=false;
+				setChanged();
+				notifyObservers("exit");
+				shell.close();
+			}
+		});
+
 		mazeDisplay = new MazeDisplay(shell, SWT.BORDER);
 		mazeDisplay.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
 		mazeDisplay.setFocus();
+		run();
+
 	}
 	@Override
 	public int getUserCommand() {
@@ -158,18 +199,14 @@ public class MazeWindow<T> extends BasicWindow {
 	}
 	@Override
 	public void display(String str) {
-		JFrame frame = new JFrame("Get aNote");
-		frame.getRootPane().setBorder(
-		BorderFactory.createEmptyBorder(20, 20, 20, 20));
-		label = new JLabel(str);
-		label.setFont(new Font("Dialog", Font.PLAIN, 20));
-		frame.add(label);
-		frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		frame.setSize(300, 150);
-		frame.setLocation(200, 200);
-		frame.setVisible(true);
+		if (str.length()<50)
+			Display.getDefault().asyncExec(new Runnable() {
+				public void run() {
+					GenerateNoteWindow.getInstance(str, display);
 
-	}
+				}
+			});
+				}
 	@Override
 	public void display(Object tValue) {
 
@@ -180,6 +217,7 @@ public class MazeWindow<T> extends BasicWindow {
 		if (tValue.getClass().getName() == "mazeGenerators.Maze3d") {
 			mazeDisplay.setMyMaze((Maze3d) tValue);
 			mazeDisplay.mazeName = this.curr;
+
 			return;
 		}
 		if (tValue.getClass().getName() == "algorithms.search.Solution") {
@@ -227,12 +265,37 @@ public class MazeWindow<T> extends BasicWindow {
 
 
 	}
-
 	@Override
 	public void run() {
 
-	}
+		TimerTask task = new TimerTask() {
 
+			@Override
+			public void run() {
+				display.syncExec(new Runnable() {
+
+					@Override
+					public void run() {
+					if(mazeDisplay.mazeName!=null)
+					{
+						saveMaze.setEnabled(mazeDisplay.activeMaze);
+						btnDisplaySolution.setEnabled(mazeDisplay.solutionAvailable);
+					}
+					}
+				});
+
+			}
+		};
+		Timer timer = new Timer();
+		timer.scheduleAtFixedRate(task, 0, 4*1000);
+
+
+	}
+	public void display(Maze3d maze3d) {
+		mazeDisplay.setMyMaze( maze3d);
+		mazeDisplay.mazeName = this.curr;
+
+	}
 
 }
 

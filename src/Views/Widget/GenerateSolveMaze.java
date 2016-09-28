@@ -6,6 +6,8 @@ import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
+import org.eclipse.swt.widgets.Display;
+import org.eclipse.swt.widgets.Shell;
 
 /**
  * Created by orrko_000 on 25/09/2016.
@@ -50,7 +52,6 @@ public class GenerateSolveMaze extends DialogWindow  {
             public void widgetSelected(SelectionEvent arg0) {
                 setChanged();
                 notifyObservers("solve "+mazeName+ " BFS");
-                shell.close();
             }
             @Override
             public void widgetDefaultSelected(SelectionEvent arg0) {
@@ -58,7 +59,12 @@ public class GenerateSolveMaze extends DialogWindow  {
             }
         });
         shell.setDefaultButton(BFS);
-
+        shell.open();
+        while (!shell.isDisposed()) {
+            if (!shell.getDisplay().readAndDispatch())
+                shell.getDisplay().sleep();
+        }
+        shell.getDisplay().dispose();
     }
 
 }
