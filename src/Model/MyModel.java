@@ -241,6 +241,8 @@ public class MyModel extends Observable implements Model {
             if (mHMap == null)
                 mHMap = new HashMap<>();
             mHMap.put(mazeName, new Maze3d(b));
+            setChanged();
+            notifyObservers("Maze: "+mazeName+" successfully loaded!");
             return true;
         } catch (FileNotFoundException e) {
             e.printStackTrace();

@@ -16,7 +16,8 @@ public class GenerateNoteWindow extends DialogWindow {
         shell=new Shell(d);
         note=str;
         MessageBox msg = new MessageBox(shell, SWT.OK);
-        msg.setText(note);
+        msg.setText("Note");
+
         msg.setMessage(note);
         msg.open();
     }

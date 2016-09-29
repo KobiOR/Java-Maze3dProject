@@ -15,6 +15,7 @@ import org.eclipse.swt.widgets.Display;
 
 import java.awt.event.WindowEvent;
 import java.util.*;
+import java.util.List;
 
 import static com.sun.java.accessibility.util.AWTEventMonitor.addWindowListener;
 import static java.lang.System.exit;
@@ -24,7 +25,7 @@ public class MazeWindow<T> extends BasicWindow {
 	private MazeDisplay mazeDisplay;
 	BasicWindow b = this;
 	List<DialogWindow> dView = new ArrayList<>();
-	String curr;
+	String mazeNameMazeWindow;
 	Button btnDisplaySolution;
 	boolean solutionAvailable = false;
 	Button saveMaze;
@@ -69,8 +70,10 @@ public class MazeWindow<T> extends BasicWindow {
 						win.start(display);
 						shell.open();
 
+
 				}
 				});
+				mazeDisplay.setFocus();
 
 
 			}
@@ -194,6 +197,7 @@ public class MazeWindow<T> extends BasicWindow {
 		mazeDisplay.setFocus();
 		run();
 
+
 	}
 	@Override
 	public int getUserCommand() {
@@ -201,13 +205,15 @@ public class MazeWindow<T> extends BasicWindow {
 	}
 	@Override
 	public void display(String str) {
+		if (str.split(" ")[0].equals("Maze:"))mazeNameMazeWindow=str.split(" ")[1];
 		if (str.length()<50)
 			Display.getDefault().asyncExec(new Runnable() {
 				public void run() {
 					GenerateNoteWindow.getInstance(str, display);
-
+					mazeDisplay.setFocus();
 				}
 			});
+
 				}
 	@Override
 	public void display(Object tValue) {
@@ -218,7 +224,7 @@ public class MazeWindow<T> extends BasicWindow {
 		}
 		if (tValue.getClass().getName() == "mazeGenerators.Maze3d") {
 			mazeDisplay.setMyMaze((Maze3d) tValue);
-			mazeDisplay.mazeName = this.curr;
+			mazeDisplay.mazeName = this.mazeNameMazeWindow;
 
 			return;
 		}
@@ -251,11 +257,18 @@ public class MazeWindow<T> extends BasicWindow {
 					{
 					if (str[0].equals("exit")){ exit(1);break;}
 					if (str[0].equals("generate_maze")) {
-						curr = new String(str[1]);
+						mazeNameMazeWindow = new String(str[1]);
 						setChanged();
 						notifyObservers(str);
 						break;
 					}
+						/*if (str[0].equals("load_maze")) {
+							mazeNameMazeWindow = new String(str[1]);
+							setChanged();
+							notifyObservers(str);
+							break;
+						}
+						*/
 					else {
 						setChanged();
 						notifyObservers(str);
@@ -290,6 +303,7 @@ public class MazeWindow<T> extends BasicWindow {
 					{
 						saveMaze.setEnabled(mazeDisplay.activeMaze);
 						btnDisplaySolution.setEnabled(mazeDisplay.solutionAvailable);
+
 					}
 					}
 				});
@@ -303,7 +317,8 @@ public class MazeWindow<T> extends BasicWindow {
 	}
 	public void display(Maze3d maze3d) {
 		mazeDisplay.setMyMaze( maze3d);
-		mazeDisplay.mazeName = this.curr;
+		mazeDisplay.mazeName = this.mazeNameMazeWindow;
+		mazeDisplay.setFocus();
 
 	}
 

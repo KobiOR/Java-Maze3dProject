@@ -13,7 +13,10 @@ import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.widgets.Canvas;
 import org.eclipse.swt.widgets.Composite;
 
+import java.awt.*;
 import java.util.*;
+import java.util.List;
+
 public class MazeDisplay extends Canvas {
 
 	private Maze3d myMaze;
@@ -29,6 +32,7 @@ public class MazeDisplay extends Canvas {
 
 	public MazeDisplay(Composite parent, int style) {
 		super(parent, style);
+
 		status=true;
 		this.addKeyListener(new KeyListener() {
 
@@ -129,7 +133,6 @@ public class MazeDisplay extends Canvas {
 			}
 		});
 		start();
-
     }
 	public void setMyMaze(Maze3d myMaze) {
 		this.myMaze = new Maze3d(myMaze);

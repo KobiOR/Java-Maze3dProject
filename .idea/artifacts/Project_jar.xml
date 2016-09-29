@@ -9,10 +9,6 @@
       <element id="extracted-dir" path="$PROJECT_DIR$/eclipse.jar" path-in-jar="/" />
       <element id="extracted-dir" path="$PROJECT_DIR$/swing-layout-1.0.jar" path-in-jar="/" />
       <element id="extracted-dir" path="$PROJECT_DIR$/../MyAlgorithms/out/artifacts/MyAlgorithms_jar/MyAlgorithms.jar" path-in-jar="/" />
-      <element id="dir-copy" path="$PROJECT_DIR$/images" />
-      <element id="directory" name="images">
-        <element id="dir-copy" path="$PROJECT_DIR$/images" />
-      </element>
       <element id="file-copy" path="$PROJECT_DIR$/images/ball.png" />
     </root>
   </artifact>
