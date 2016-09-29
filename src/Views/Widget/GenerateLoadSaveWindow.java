@@ -1,11 +1,9 @@
 package Views.Widget;
 
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.graphics.Path;
 import org.eclipse.swt.widgets.FileDialog;
 
 import java.io.File;
-import java.nio.file.Paths;
 
 public class GenerateLoadSaveWindow extends DialogWindow {
 

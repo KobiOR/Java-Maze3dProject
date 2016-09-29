@@ -1,13 +1,8 @@
 package Model;
 
-import algorithms.search.Solution;
-import mazeGenerators.Coordinate;
 import mazeGenerators.Maze3d;
 
-import java.io.*;
-import java.util.HashMap;
-import java.util.zip.GZIPInputStream;
-import java.util.zip.GZIPOutputStream;
+import java.io.IOException;
 
 /**
  * Created by orrko_000 on 12/09/2016.

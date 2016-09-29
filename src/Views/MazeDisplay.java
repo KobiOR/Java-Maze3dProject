@@ -1,13 +1,9 @@
 package Views;
 
-import java.awt.*;
-import java.lang.*;
-import java.util.*;
-import java.util.List;
-
 import algorithms.search.Solution;
 import algorithms.search.State;
-import mazeGenerators.*;
+import mazeGenerators.Coordinate;
+import mazeGenerators.Maze3d;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.KeyEvent;
 import org.eclipse.swt.events.KeyListener;
@@ -16,19 +12,20 @@ import org.eclipse.swt.events.PaintListener;
 import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.widgets.Canvas;
 import org.eclipse.swt.widgets.Composite;
+
+import java.util.*;
 public class MazeDisplay extends Canvas {
 
 	private Maze3d myMaze;
 	public Player player;
 	TimerTask task;
+	Timer timer;
 	boolean status=false;
 	public String mazeName= "";
 	private int mHeight=1;
 	private Solution<Coordinate> mazeSolution=null;
 	boolean solutionAvailable=false;
 	boolean activeMaze=false;
-
-	Timer timer;
 
 	public MazeDisplay(Composite parent, int style) {
 		super(parent, style);
@@ -136,7 +133,7 @@ public class MazeDisplay extends Canvas {
     }
 	public void setMyMaze(Maze3d myMaze) {
 		this.myMaze = new Maze3d(myMaze);
-		player = new Player();
+		player = new Player(getDisplay());
 		player.setPos(new Coordinate(myMaze.getEntry()));
 
 	}
@@ -205,7 +202,7 @@ public class MazeDisplay extends Canvas {
 				}
 			};
 		Timer timer = new Timer();
-		timer.scheduleAtFixedRate(tasker, 0,500);
+		timer.scheduleAtFixedRate(tasker, 0,450);
 	}
 	public Solution<Coordinate> getMazeSolution() {
 		if(mazeSolution!=null)return mazeSolution;

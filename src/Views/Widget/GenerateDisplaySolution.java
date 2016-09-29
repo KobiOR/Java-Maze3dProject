@@ -1,6 +1,5 @@
 package Views.Widget;
 
-import Views.Widget.DialogWindow;
 import algorithms.search.Solution;
 import algorithms.search.State;
 import org.eclipse.swt.SWT;

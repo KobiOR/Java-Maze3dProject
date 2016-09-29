@@ -1,6 +1,5 @@
 package Views;
 
-import Presenters.Presenter;
 import mazeGenerators.Maze3d;
 
 import java.io.IOException;

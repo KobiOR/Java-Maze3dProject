@@ -1,10 +1,8 @@
 package Views;
 
-import Presenters.Presenter;
 import mazeGenerators.Maze3d;
 
 import java.io.IOException;
-import java.util.Observable;
 
 /**
  * Created by orrko_000 on 12/09/2016.

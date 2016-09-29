@@ -2,9 +2,6 @@ package Views;
 
 import Views.Widget.*;
 import algorithms.search.Solution;
-import com.sun.javafx.tk.*;
-import com.sun.javafx.tk.Toolkit;
-import javafx.concurrent.Task;
 import mazeGenerators.Maze3d;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionEvent;
@@ -15,14 +12,9 @@ import org.eclipse.swt.layout.RowLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
-import javax.swing.*;
-import java.awt.*;
-import java.awt.event.WindowAdapter;
+
 import java.awt.event.WindowEvent;
-import java.lang.*;
 import java.util.*;
-import java.util.List;
-import java.util.Timer;
 
 import static com.sun.java.accessibility.util.AWTEventMonitor.addWindowListener;
 import static java.lang.System.exit;

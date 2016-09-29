@@ -4,9 +4,7 @@ import java.beans.XMLDecoder;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 
-import static mazeGenerators.Maze3dGenerator.ANSI_BOLD;
-import static mazeGenerators.Maze3dGenerator.ANSI_RED;
-import static mazeGenerators.Maze3dGenerator.ANSI_RESET;
+import static mazeGenerators.Maze3dGenerator.*;
 
 
 

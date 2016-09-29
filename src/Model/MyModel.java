@@ -1,6 +1,6 @@
 package Model;
 
-import Presenters.*;
+import Presenters.PropertiesLoader;
 import algorithem.Demo.MazeAdapter;
 import algorithms.search.*;
 import io.MyCompressorOutputStream;
@@ -9,14 +9,16 @@ import mazeGenerators.Coordinate;
 import mazeGenerators.GrowingTreeGenerator;
 import mazeGenerators.Maze3d;
 import mazeGenerators.SimpleMaze3dGenerator;
+
 import java.beans.XMLEncoder;
-import java.util.*;
-import java.util.Properties;
-import java.util.concurrent.locks.StampedLock;
-import java.util.zip.ZipInputStream;
 import java.io.*;
-import java.util.concurrent.*;
-import java.util.zip.*;
+import java.util.*;
+import java.util.concurrent.Callable;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.zip.ZipEntry;
+import java.util.zip.ZipInputStream;
+import java.util.zip.ZipOutputStream;
 
 import static mazeGenerators.Maze3dGenerator.*;
 

@@ -2,8 +2,9 @@ package Presenters;
 
 import Model.Model;
 import Presenters.Commands.*;
-import Views.View;
 import Views.Cli;
+import Views.View;
+
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;

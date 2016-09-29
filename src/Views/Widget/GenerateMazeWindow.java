@@ -10,8 +10,6 @@ import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.MessageBox;
 import org.eclipse.swt.widgets.Text;
 
-import static org.eclipse.swt.SWT.COLOR_LIST_FOREGROUND;
-
 public class GenerateMazeWindow extends DialogWindow {
 
 	String CurrentmazeName;

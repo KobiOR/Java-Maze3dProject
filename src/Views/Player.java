@@ -2,6 +2,9 @@ package Views;
 import mazeGenerators.Coordinate;
 import org.eclipse.swt.graphics.GC;
 import org.eclipse.swt.graphics.Image;
+import org.eclipse.swt.widgets.Display;
+
+import java.io.InputStream;
 
 public class Player {
 	private Coordinate c;
@@ -10,8 +13,9 @@ public class Player {
 	public Coordinate getC() {
 		return new Coordinate(c);
 	}
-	public Player() {
-		img = new Image(null,"images/player.gif");
+	public Player(Display d) {
+		InputStream is = getClass().getResourceAsStream("ball.png");
+		img = new Image(d,is);
 	}
 	public Coordinate getPos() {
 		return c;

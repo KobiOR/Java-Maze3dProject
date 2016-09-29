@@ -9,6 +9,7 @@
       <element id="library" level="project" name="MyAlgorithms" />
       <element id="dir-copy" path="$PROJECT_DIR$/src" />
       <element id="dir-copy" path="$PROJECT_DIR$/JavaDoc" />
+      <element id="file-copy" path="$PROJECT_DIR$/swing-layout-1.0.jar" />
     </root>
   </artifact>
 </component>
