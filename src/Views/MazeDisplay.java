@@ -12,8 +12,6 @@ import org.eclipse.swt.events.PaintListener;
 import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.widgets.Canvas;
 import org.eclipse.swt.widgets.Composite;
-
-import java.awt.*;
 import java.util.*;
 import java.util.List;
 
@@ -102,7 +100,7 @@ public class MazeDisplay extends Canvas {
 							int x = j * w;
 							int y = i * h;
 							if (myMaze.WallExist(new Coordinate(mHeight,i,j))) {
-								e.gc.fillRectangle(x, y, w, h);//e.gc.fillGradientRectangle(x, y, w, h, true);
+								e.gc.fillRectangle(x, y, w, h);
 							}
 							else {
 								if(v!=null)
@@ -178,7 +176,8 @@ public class MazeDisplay extends Canvas {
 		});
 
 	}
-	public synchronized void solve() {
+	public void solve() {
+		String mName=new String(mazeName);
 
 		List<State<Coordinate>> list = mazeSolution.getStates();
 		Queue<Coordinate> q = new LinkedList<>();
@@ -192,11 +191,14 @@ public class MazeDisplay extends Canvas {
 
 						@Override
 						public void run() {
-							if(!q.isEmpty())
+							if(!q.isEmpty() && mazeName.equals(mName))
 							{
 								player.setPos(q.poll());
 								mHeight=player.getPos().getcMazeHeight();
 							}
+							if (mazeName.equals(mName)==false){
+								timer.cancel();cancel();redraw();return;}
+
 
 
 						}
@@ -221,7 +223,8 @@ public class MazeDisplay extends Canvas {
 
 					@Override
 					public void run() {
-						redraw();if(!status)return;
+						redraw();
+						if(!status)return;
 				}
 				});
 

@@ -27,8 +27,7 @@ public class MazeWindow<T> extends BasicWindow {
 	List<DialogWindow> dView = new ArrayList<>();
 	String mazeNameMazeWindow;
 	Button btnDisplaySolution;
-	boolean solutionAvailable = false;
-	Button saveMaze;
+	Button saveMaze,btnSolveMaze;
 	@Override
 	protected void initWidgets() {
 
@@ -69,13 +68,9 @@ public class MazeWindow<T> extends BasicWindow {
 						win.addObserver(b);
 						win.start(display);
 						shell.open();
-
-
 				}
 				});
 				mazeDisplay.setFocus();
-
-
 			}
 
 			@Override
@@ -87,7 +82,6 @@ public class MazeWindow<T> extends BasicWindow {
 
 		saveMaze = new Button(buttons, SWT.PUSH);
 		saveMaze.setText("Save maze");
-		saveMaze.setEnabled(false);
 		saveMaze.addSelectionListener(new SelectionListener() {
 
 			@Override
@@ -108,7 +102,7 @@ public class MazeWindow<T> extends BasicWindow {
 			}
 		});
 
-		Button btnSolveMaze = new Button(buttons, SWT.PUSH);
+		btnSolveMaze = new Button(buttons, SWT.PUSH);
 		btnSolveMaze.setText("Solve maze");
 		btnSolveMaze.addSelectionListener(new SelectionListener() {
 
@@ -135,7 +129,6 @@ public class MazeWindow<T> extends BasicWindow {
 
 		btnDisplaySolution = new Button(buttons, SWT.PUSH);
 		btnDisplaySolution.setText("Display Solution");
-		btnDisplaySolution.setEnabled(solutionAvailable);
 		btnDisplaySolution.addSelectionListener(new SelectionListener()	{
 			@Override
 			public void widgetSelected(SelectionEvent e) {
@@ -191,11 +184,11 @@ public class MazeWindow<T> extends BasicWindow {
 				shell.close();
 			}
 		});
-
+		run();
 		mazeDisplay = new MazeDisplay(shell, SWT.BORDER);
 		mazeDisplay.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
 		mazeDisplay.setFocus();
-		run();
+
 
 
 	}
@@ -235,6 +228,7 @@ public class MazeWindow<T> extends BasicWindow {
 				public void run() {
 					mazeDisplay.setSolution((Solution)tValue);
 					mazeDisplay.solutionAvailable=true;
+
 				}
 			});
 
@@ -299,11 +293,13 @@ public class MazeWindow<T> extends BasicWindow {
 
 					@Override
 					public void run() {
-					if(mazeDisplay.mazeName!=null)
+				if(mazeDisplay.mazeName!=null)
 					{
-						saveMaze.setEnabled(mazeDisplay.activeMaze);
-						btnDisplaySolution.setEnabled(mazeDisplay.solutionAvailable);
-
+						if (mazeDisplay.status){
+							saveMaze.setEnabled(mazeDisplay.activeMaze);
+							btnDisplaySolution.setEnabled(mazeDisplay.solutionAvailable && mazeDisplay.mazeName.equals(mazeNameMazeWindow));
+							btnSolveMaze.setEnabled(mazeDisplay.activeMaze);
+						}
 					}
 					}
 				});
@@ -311,7 +307,7 @@ public class MazeWindow<T> extends BasicWindow {
 			}
 		};
 		Timer timer = new Timer();
-		timer.scheduleAtFixedRate(task, 0,1500);
+		timer.scheduleAtFixedRate(task, 0,2000);
 
 
 	}
