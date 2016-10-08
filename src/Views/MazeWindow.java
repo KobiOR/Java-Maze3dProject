@@ -27,7 +27,7 @@ public class MazeWindow<T> extends BasicWindow {
 	List<DialogWindow> dView = new ArrayList<>();
 	String mazeNameMazeWindow;
 	Button btnDisplaySolution;
-	Button saveMaze,btnSolveMaze;
+	Button saveMaze,btnSolveMaze,loadXML;
 	@Override
 	protected void initWidgets() {
 
@@ -71,6 +71,28 @@ public class MazeWindow<T> extends BasicWindow {
 				}
 				});
 				mazeDisplay.setFocus();
+			}
+
+			@Override
+			public void widgetDefaultSelected(SelectionEvent arg0) {
+				// TODO Auto-generated method stub
+
+			}
+		});
+
+		loadXML = new Button(buttons, SWT.PUSH);
+		loadXML.setText("Open properties");
+		loadXML.addSelectionListener(new SelectionListener() {
+
+			@Override
+			public void widgetSelected(SelectionEvent arg0) {
+				Display.getDefault().asyncExec(new Runnable() {
+					public void run() {
+						GenerateLoadXmlWindow win=new GenerateLoadXmlWindow();
+						win.addObserver(b);
+						win.start(display);
+					}
+				});
 			}
 
 			@Override

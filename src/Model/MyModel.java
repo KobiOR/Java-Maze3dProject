@@ -349,7 +349,7 @@ public class MyModel extends Observable implements Model {
     }
     public void changeProperties(String name, String value) throws IOException {
         if(name.equals("ChangeGenerate")){
-            if(value.equals("DFS") || value.equals("RDC")|| value.equals("SimpleMaze")){
+            if(value.equals("DFS") || value.equals("SimpleMaze")){
                 p.setGenerateMazeAlgorithm(value);
             }else{
                 throw new IOException("Invalid Algorithm Name");
@@ -368,5 +368,4 @@ public class MyModel extends Observable implements Model {
         setChanged();
         notifyObservers("change_properties_notify_command " + name);
     }
-    //TODO לתקן את הקטע שאני שולח סולשן באמצעות סטרינג...נשלח פשוט סולישן ונעשה אבחנה בOBSERVABLE
 }
