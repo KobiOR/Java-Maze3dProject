@@ -7,7 +7,7 @@
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
-    <orderEntry type="library" exported="" name="eclipse" level="project" />
     <orderEntry type="library" exported="" name="MyAlgorithms" level="project" />
+    <orderEntry type="library" name="swt_Windows64" level="project" />
   </component>
 </module>
