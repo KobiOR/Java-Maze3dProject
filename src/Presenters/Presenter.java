@@ -32,8 +32,10 @@ public class Presenter implements Observer {
     public Presenter(View cView, Model cModel) {
         installCommands();
         this.cView = cView;
-        this.cModel = cModel;
         cView.setCli(new Cli(new BufferedReader(new InputStreamReader(System.in)), new PrintWriter(System.out, true),this));
+        this.cModel = cModel;
+
+
 
     }
     @Override
@@ -62,7 +64,10 @@ public class Presenter implements Observer {
 
     }
     private void doCommand(String [] strArray){
+        if (strArray[0].equals("load_properties")) {cModel.loadProperties(strArray[1]);return;}
+
         if (!checkInput(strArray[0])) return;
+
         else {
                     if (strArray.length == 1)
                         if (hMap.get(strArray[0]) != null && strArray[0].equals("exit")) {

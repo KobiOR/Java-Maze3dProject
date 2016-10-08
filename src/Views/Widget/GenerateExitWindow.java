@@ -27,7 +27,6 @@ public class GenerateExitWindow extends DialogWindow  {
 
                 setChanged();
                 notifyObservers("exit");
-                shell.close();
             }
             @Override
             public void widgetDefaultSelected(SelectionEvent arg0) {

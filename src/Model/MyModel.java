@@ -1,6 +1,7 @@
 package Model;
 
-import Presenters.PropertiesLoader;
+import Presenters.*;
+import Presenters.Properties;
 import algorithem.Demo.MazeAdapter;
 import algorithms.search.*;
 import io.MyCompressorOutputStream;
@@ -10,6 +11,7 @@ import mazeGenerators.GrowingTreeGenerator;
 import mazeGenerators.Maze3d;
 import mazeGenerators.SimpleMaze3dGenerator;
 
+import java.beans.XMLDecoder;
 import java.beans.XMLEncoder;
 import java.io.*;
 import java.util.*;
@@ -34,13 +36,9 @@ public class MyModel extends Observable implements Model {
     private Presenters.Properties p;
 
     public MyModel() {
-       p = PropertiesLoader.getInstance().getProperties();
-        executor = Executors.newFixedThreadPool(1);
-        try {
-            loadHashMap();
-        } catch (IOException e) {
-            notifyObservers("No found files to load");
-        }
+        p = PropertiesLoader.getInstance().getProperties();
+        executor = Executors.newFixedThreadPool(7);
+        loadHashMap();
 
     }
     @Override
@@ -278,17 +276,21 @@ public class MyModel extends Observable implements Model {
         return true;
 
     }
-    public boolean loadHashMap() throws IOException {
+    public boolean loadHashMap()  {
         unZipIt("data.zip");
         String s=new String();
         Queue<String> queue=new LinkedList<String>();
         if (sMap==null)
             sMap=new HashMap<>();
-        try (BufferedReader br = new BufferedReader(new FileReader("data.txt"))) {
-            String line;
-            while ((line = br.readLine()) != null) {
-                queue.add(line);
+        try {
+            try (BufferedReader br = new BufferedReader(new FileReader("data.txt"))) {
+                String line;
+                while ((line = br.readLine()) != null) {
+                    queue.add(line);
+                }
             }
+        } catch (IOException e) {
+
         }
         while (!queue.isEmpty()) {
             List<State<Coordinate>> states = new ArrayList();
@@ -316,7 +318,7 @@ public class MyModel extends Observable implements Model {
             while(ze!=null){
                 String fileName = ze.getName();
                 File newFile = new File(fileName);
-                System.out.println(ANSI_BOLD+ANSI_RED+"Data unzip : "+ newFile.getAbsoluteFile()+ANSI_RESET);
+                System.out.println("Data unzip : "+ newFile.getAbsoluteFile());
                 FileOutputStream fos = new FileOutputStream(newFile);
                 int len;
                 while ((len = zis.read(buffer)) > 0) {
@@ -329,16 +331,15 @@ public class MyModel extends Observable implements Model {
 
             zis.closeEntry();
             zis.close();
-
-            System.out.println(ANSI_BOLD+ANSI_BLUE+"The file:"+ zipFile+" was unzip successfully"+ANSI_RESET);
+            System.out.println(" \u001b[1m "+"The file:"+ zipFile+" was unzip successfully"+" \u001b[0m ");
 
         }catch(IOException ex){
             notifyObservers("No files to load");
         }
     }
     public void saveProperties() {
-        try {
-            XMLEncoder encoder = new XMLEncoder(new FileOutputStream("properties.xml"));
+         try {
+             XMLEncoder encoder = new XMLEncoder(new FileOutputStream("properties.xml"));
             encoder.writeObject(p);
             encoder.close();
         } catch (FileNotFoundException e) {
@@ -347,25 +348,19 @@ public class MyModel extends Observable implements Model {
 
 
     }
-    public void changeProperties(String name, String value) throws IOException {
-        if(name.equals("ChangeGenerate")){
-            if(value.equals("DFS") || value.equals("SimpleMaze")){
-                p.setGenerateMazeAlgorithm(value);
-            }else{
-                throw new IOException("Invalid Algorithm Name");
-            }
+    public void loadProperties(String path) {
 
-        }else if(name.equals("ChangeSolve")){
-            if(value.equals("BFS") || value.equals("DFS")){
-                p.setSolveMazeAlgorithm(value);
-            }else{
-                throw new IOException("Invalid Algorithm Name");
-            }
-        }else{
-            throw new IOException("Invalid Parameter name");
+
         }
-
-        setChanged();
-        notifyObservers("change_properties_notify_command " + name);
+    @Override
+    public void exit() {
+        try {
+            saveHashMap();
+            saveProperties();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
+
 }
+

@@ -2,7 +2,10 @@ package Views;
 
 import mazeGenerators.Maze3d;
 
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.PrintWriter;
 import java.util.Observable;
 
 import static mazeGenerators.Maze3dGenerator.*;
@@ -14,15 +17,17 @@ public class MyView<T> extends BasicWindow {
     private Cli cmdLine;
     public MyView() {
         super();
+
+
     }
     public void start() throws IOException {
-        instruction();
         cmdLine.start();
-    }
+        instruction();
 
+    }
     @Override
     public void setCli(Cli c) {
-
+        cmdLine=c;
     }
 
     @Override

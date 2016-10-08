@@ -42,7 +42,7 @@ public class MazeDisplay extends Canvas {
 
 			@Override
 			public void keyPressed(KeyEvent e) {
-				if(!status)return;
+				if(!status || myMaze==null)return;
 				Coordinate pos = player.getPos();
 				switch (e.keyCode) {
 					case SWT.ARROW_RIGHT:

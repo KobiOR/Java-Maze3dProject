@@ -9,25 +9,25 @@ import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.layout.RowLayout;
-import org.eclipse.swt.widgets.Button;
-import org.eclipse.swt.widgets.Composite;
-import org.eclipse.swt.widgets.Display;
-
-import java.awt.event.WindowEvent;
+import org.eclipse.swt.widgets.*;
 import java.util.*;
 import java.util.List;
 
-import static com.sun.java.accessibility.util.AWTEventMonitor.addWindowListener;
 import static java.lang.System.exit;
 
 public class MazeWindow<T> extends BasicWindow {
 
 	private MazeDisplay mazeDisplay;
+	TimerTask task;
+	Timer timer;
 	BasicWindow b = this;
 	List<DialogWindow> dView = new ArrayList<>();
 	String mazeNameMazeWindow;
 	Button btnDisplaySolution;
 	Button saveMaze,btnSolveMaze,loadXML;
+
+
+
 	@Override
 	protected void initWidgets() {
 
@@ -193,25 +193,28 @@ public class MazeWindow<T> extends BasicWindow {
 			}
 		});
 
-		addWindowListener(new java.awt.event.WindowAdapter()
+		shell.addListener(SWT.Close, new Listener()
 		{
-			@Override
-			public void windowClosed(WindowEvent e)
+			public void handleEvent(Event event)
 			{
-		mazeDisplay.timer.cancel();
-		mazeDisplay.task.cancel();
-		mazeDisplay.status=false;
-				setChanged();
-				notifyObservers("exit");
-				shell.close();
+				display.asyncExec(new Runnable() {
+						@Override
+						public void run() {
+							mazeDisplay.task.cancel();
+							task.cancel();
+							exit(1);
+
+						}
+					});
+
+
 			}
 		});
+
 		run();
 		mazeDisplay = new MazeDisplay(shell, SWT.BORDER);
 		mazeDisplay.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
 		mazeDisplay.setFocus();
-
-
 
 	}
 	@Override
@@ -271,7 +274,6 @@ public class MazeWindow<T> extends BasicWindow {
 		{
 				case "Views":
 					{
-					if (str[0].equals("exit")){ exit(1);break;}
 					if (str[0].equals("generate_maze")) {
 						mazeNameMazeWindow = new String(str[1]);
 						setChanged();
@@ -307,11 +309,11 @@ public class MazeWindow<T> extends BasicWindow {
 	@Override
 	public void run() {
 
-		TimerTask task = new TimerTask() {
+		task = new TimerTask() {
 
 			@Override
 			public void run() {
-				display.syncExec(new Runnable() {
+				display.asyncExec(new Runnable() {
 
 					@Override
 					public void run() {
@@ -321,6 +323,7 @@ public class MazeWindow<T> extends BasicWindow {
 							saveMaze.setEnabled(mazeDisplay.activeMaze);
 							btnDisplaySolution.setEnabled(mazeDisplay.solutionAvailable && mazeDisplay.mazeName.equals(mazeNameMazeWindow));
 							btnSolveMaze.setEnabled(mazeDisplay.activeMaze);
+
 						}
 					}
 					}
@@ -328,7 +331,7 @@ public class MazeWindow<T> extends BasicWindow {
 
 			}
 		};
-		Timer timer = new Timer();
+		timer = new Timer();
 		timer.scheduleAtFixedRate(task, 0,2000);
 
 
