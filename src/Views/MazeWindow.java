@@ -278,7 +278,7 @@ public class MazeWindow<T> extends BasicWindow {
 				}
 
 		}
-			//TODO לסדר את כל החרא פה! לעשות סוויץ קייס
+			
 
 
 	}
