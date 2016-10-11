@@ -23,24 +23,52 @@ import java.util.zip.ZipInputStream;
 import java.util.zip.ZipOutputStream;
 
 import static mazeGenerators.Maze3dGenerator.*;
-
-
 /**
- * Created by orrko_000 on 12/09/2016.
+ * This class does nothing useful
+ * @author Kobi Or
+ *
  */
+/**
+ * The class MyModel extends Observable (to observe from presenter {@link Presenter} and implements Model interface {@link Model} to keep particular standard {
+ *
+ * {@link MyModel#executor}
+ * @param {@link MyModel#executor}
+ * @author Kobi Or 02/09/2016.
+ * @version 1.0
+ * @return Solution<T> OR double
+ * @exception
+ * @serial no Serial
+ * @see
+ */
+
+
+
 public class MyModel extends Observable implements Model {
 
     private ExecutorService executor;
     private HashMap<String, Maze3d> mHMap = null;
     private HashMap<String[], Solution<Coordinate>> sMap;
     private Presenters.Properties p;
-
+    /**
+     * MyModel C'Tor-initialize  ExecutorService,HashMap<String, Maze3d>,HashMap<String[], Solution<Coordinate>>, Presenters.Properties
+     * and load HashMap if exist
+     */
     public MyModel() {
         p = PropertiesLoader.getInstance().getProperties();
         executor = Executors.newFixedThreadPool(7);
         loadHashMap();
 
     }
+    /**
+     * This function generate new maze
+     * @param mName Maze Name
+     * @param fHeight Height of maze (all structure)
+     * @param fWidth Floor width (all floors are the same)
+     * @param fHeight Floor height (all floors are the same)
+     * @param algoname GrowingTree {@link GrowingTreeGenerator} or Simple {@link SimpleMaze3dGenerator}
+     * @throws Exception if Hmap emptey or map to big.
+     * @return Maze3d object-a 3D maze
+     */
     @Override
     public Maze3d generate3dmaze(String mName, int mHeight, int fHeight, int fWidth, String algoname) throws Exception {
 
@@ -77,6 +105,12 @@ public class MyModel extends Observable implements Model {
         });
         return mHMap.get(mName);
     }
+    /**
+     * This function solve maze using dfs or bfs
+     * @param mazeName Maze Name
+     * @param algorithm GrowingTree {@link GrowingTreeGenerator} or Simple {@link SimpleMaze3dGenerator}
+     * @throws Exception if algorithm anme unrecognized
+     */
     @Override
     public void solve(String mazeName, String algorithm) throws Exception {
         if (mHMap == null) {
@@ -131,8 +165,12 @@ public class MyModel extends Observable implements Model {
         });
 
     }
+    /**
+     * This function display the solution of maze.(found by maze name)
+     * @param mazeName The maze name
+     */
     @Override
-    public String displaySolution(String mazeName) throws Exception {
+    public String displaySolution(String mazeName) {
         List<String[]> list = new ArrayList<>(sMap.keySet());
         String st = new String();
         boolean b = false;
