@@ -1,5 +1,11 @@
 package Presenters;
-
+/**
+ * This class are the presenter-she connect between the Model {@link Model} and the View {@link View}
+ * @param cView view address
+ * @param cModel - model address
+ * @param hMap - hashmap between the commands and the name of them
+ * @implements Observer-she getting notify by model and the view
+ */
 import Model.Model;
 import Presenters.Commands.*;
 import Views.Cli;
@@ -14,21 +20,33 @@ import java.util.Observer;
 
 import static java.lang.System.exit;
 
-/**
- * Created by orrko_000 on 12/09/2016.
- */
 public class Presenter implements Observer {
-
     private View cView;
     private Model cModel;
     private HashMap<String,Command> hMap;
 
+    /**
+     * @return View -cView
+     */
     public View getView() {
         return cView;
     }
+
+    /**
+     *
+     * return the model cModel
+     * @return Model
+     */
     public Model getModel() {
         return cModel;
     }
+
+    /**
+     *
+     * C'TOR to initialize the class
+     * @param cView -to the local view
+     * @param cModel -to the local model
+     */
     public Presenter(View cView, Model cModel) {
         installCommands();
         this.cView = cView;
@@ -38,6 +56,12 @@ public class Presenter implements Observer {
 
 
     }
+
+    /**
+     *  Update implantation for the observers
+     * @param object - the object that sent the notify
+     * @param arg - the arg that the object send
+     */
     @Override
     public void update(Observable object, Object arg){
         String str=object.getClass().getName();

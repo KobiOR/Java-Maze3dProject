@@ -32,8 +32,7 @@ public interface Model {
     /**
      * solving the maze in name "name" by the algorithm in name "algorithm"
      * and return a solution to the right maze in the right algorithm we wanted
-     * @param name
-     * @param algorithm
+     * @param name maze name
      * @return
      * @throws Exception
      */

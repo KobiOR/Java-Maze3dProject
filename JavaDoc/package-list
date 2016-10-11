@@ -1,5 +1,6 @@
 Boot
+Model
 Presenters
 Presenters.Commands
-Model
 Views
+Views.Widget
