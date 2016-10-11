@@ -24,21 +24,8 @@ import java.util.zip.ZipOutputStream;
 
 import static mazeGenerators.Maze3dGenerator.*;
 /**
- * This class does nothing useful
- * @author Kobi Or
- *
- */
-/**
  * The class MyModel extends Observable (to observe from presenter {@link Presenter} and implements Model interface {@link Model} to keep particular standard {
- *
- * {@link MyModel#executor}
- * @param {@link MyModel#executor}
  * @author Kobi Or 02/09/2016.
- * @version 1.0
- * @return Solution<T> OR double
- * @exception
- * @serial no Serial
- * @see
  */
 
 
@@ -167,7 +154,8 @@ public class MyModel extends Observable implements Model {
     }
     /**
      * This function display the solution of maze.(found by maze name)
-     * @param mazeName The maze name
+     * @param mazeName maze name
+     * @return String object that contain the solution
      */
     @Override
     public String displaySolution(String mazeName) {
@@ -191,8 +179,13 @@ public class MyModel extends Observable implements Model {
 
 
     }
+    /**
+     * This function get maze name and return representation of the maze as a String object
+     * @param name maze name
+     * @return String object that contain the all maze
+     */
     @Override
-    public String display(String name) throws Exception {
+    public String display(String name) {
         if (mHMap == null) return "You need to create maze first!\n";
         else if (mHMap.containsKey(name)) {
             setChanged();
