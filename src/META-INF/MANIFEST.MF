@@ -1,0 +1,4 @@
+Manifest-Version: 1.0
+Class-Path: MyAlgorithms.jar swt_Windows64.jar
+Main-Class: Boot.Run
+

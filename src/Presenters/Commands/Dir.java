@@ -21,8 +21,8 @@ public class Dir extends Deliver {
             pDeliver.getView().display(pDeliver.getModel().dir(cmd));
         } catch (Exception e) {
 
-            System.out.println(ANSI_RED+ANSI_BOLD+"Catch NullPointerException"+ANSI_BOLD_END+ANSI_RESET);
-            System.out.println(ANSI_RED+ANSI_BOLD+"Fix your location"+ANSI_BOLD_END+ANSI_RESET);
+            System.out.println("Catch NullPointerException");
+            System.out.println("Fix your location");
         }
     }
 }

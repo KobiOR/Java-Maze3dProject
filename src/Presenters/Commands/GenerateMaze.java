@@ -26,8 +26,8 @@ public class GenerateMaze  extends Deliver {
                 pDeliver.getModel().generate3dmaze(temp[0],mHeight,fHeight,fWidth," ");
         } catch (Exception e) {
             // TODO Auto-generated catch block
-            System.out.println(ANSI_RED+ANSI_BOLD+"Catch Bad input"+ANSI_BOLD_END+ANSI_RESET);
-            System.out.println(ANSI_RED+ANSI_BOLD+"Fix your request please"+ANSI_BOLD_END+ANSI_RESET);
-            System.out.println(ANSI_RED+ANSI_BOLD+"Example generate_maze KobiMaze GrowingTree"+ANSI_BOLD_END+ANSI_RESET); }
+            System.out.println("Catch Bad input");
+            System.out.println("Fix your request please");
+            System.out.println("Example generate_maze KobiMaze GrowingTree"); }
     }
 }

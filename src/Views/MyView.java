@@ -62,16 +62,16 @@ public class MyView<T> extends BasicWindow {
 
     }
     private void instruction(){
-        cmdLine.displaymessage(ANSI_BOLD+ANSI_WHITE+"Hello"+ANSI_RESET);
-        cmdLine.displaymessage(ANSI_BOLD+ANSI_WHITE+"For Dir:"+ANSI_BOLD_END+" dir <path>"+ANSI_RESET);
-        cmdLine.displaymessage(ANSI_WHITE+ANSI_BOLD+"To create maze write:"+ANSI_BOLD_END+"generate_maze <name> <x,y,z> <algorithm> (Optinal)"+ANSI_RESET);
-        cmdLine.displaymessage(ANSI_WHITE+ANSI_BOLD+"To display maze write:"+ANSI_BOLD_END+" display <name>"+ANSI_RESET);
-        cmdLine.displaymessage(ANSI_WHITE+ANSI_BOLD+"To display maze to 2d press: "+ANSI_BOLD_END+"display_cross_section <Index> <x/y/z> <MazeName>"+ANSI_BOLD_END+ANSI_RESET);
-        cmdLine.displaymessage(ANSI_WHITE+ANSI_BOLD+"To save maze press: "+ANSI_BOLD_END+"save_maze <MazeName> <FileName>"+ANSI_RESET);
-        cmdLine.displaymessage(ANSI_WHITE+ANSI_BOLD+"To load maze press:"+ANSI_BOLD_END+" load_maze <FileName> <MazeName>"+ANSI_RESET);
-        cmdLine.displaymessage(ANSI_WHITE+ANSI_BOLD+"To solve maze press:"+ANSI_BOLD_END+" solve <MazeName> <Algorithm>"+ANSI_RESET);
-        cmdLine.displaymessage(ANSI_WHITE+ANSI_BOLD+"To display solution press:"+ANSI_BOLD_END+" display_solution <MazeName>"+ANSI_RESET);
-        cmdLine.displaymessage(ANSI_RED+ANSI_BOLD+"To exit press:"+ANSI_BOLD_END+"exit"+ANSI_RESET);
+        cmdLine.displaymessage("Hello");
+        cmdLine.displaymessage("For Dir:dir <path>");
+        cmdLine.displaymessage("To create maze write:generate_maze <name> <x,y,z> <algorithm> (Optinal)");
+        cmdLine.displaymessage("To display maze write:display <name>");
+        cmdLine.displaymessage("To display maze to 2d press: display_cross_section <Index> <x/y/z> <MazeName>");
+        cmdLine.displaymessage("To save maze press: save_maze <MazeName> <FileName>");
+        cmdLine.displaymessage("To load maze press:load_maze <FileName> <MazeName>");
+        cmdLine.displaymessage("To solve maze press:solve <MazeName> <Algorithm>");
+        cmdLine.displaymessage("To display solution press: display_solution <MazeName>");
+        cmdLine.displaymessage("To exit press:exit");
 
     }
     @Override
