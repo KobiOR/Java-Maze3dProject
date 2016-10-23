@@ -13,8 +13,6 @@ import java.io.IOException;
 import java.util.Observable;
 
 import static java.lang.System.exit;
-import static mazeGenerators.Maze3dGenerator.ANSI_RED;
-import static mazeGenerators.Maze3dGenerator.ANSI_RESET;
 
 
 public class Run {
@@ -27,7 +25,7 @@ public class Run {
             if (p.getView().equals("GUI")) myView = new MazeWindow();
             if (p.getView().equals("CL")) myView = new MyView();
             else if (myView == null) {
-                System.out.print(ANSI_RED + "Not supported view.Sorry :(\n" + ANSI_RESET);
+                System.out.print("Not supported view.Sorry :(\n");
                 exit(1);
             }
             Presenter c = new Presenter(myView, myModel);
