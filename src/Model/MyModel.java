@@ -362,7 +362,7 @@ public class MyModel extends Observable implements Model {
 
             zis.closeEntry();
             zis.close();
-            System.out.println(" \u001b[1m "+"The file:"+ zipFile+" was unzip successfully"+" \u001b[0m ");
+            System.out.println("The file:"+ zipFile+" was unzip successfully");
 
         }catch(IOException ex){
             notifyObservers("No files to load");
