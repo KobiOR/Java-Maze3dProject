@@ -37,5 +37,17 @@ public class Run {
 
 
         }
+        else
+        {
+
+                 myView = new MazeWindow();
+                 Presenter c = new Presenter(myView, myModel);
+                ((Observable) myView).addObserver(c);
+                ((Observable) myModel).addObserver(c);
+                myView.start();
+
+
+
+        }
     }
 }

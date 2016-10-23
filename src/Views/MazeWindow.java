@@ -212,7 +212,7 @@ public class MazeWindow<T> extends BasicWindow {
 		});
 
 		run();
-		mazeDisplay = new MazeDisplay(shell, SWT.BORDER);
+		mazeDisplay = new MazeDisplay(shell, SWT.BORDER|SWT.DOUBLE_BUFFERED);
 		mazeDisplay.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
 		mazeDisplay.setFocus();
 
